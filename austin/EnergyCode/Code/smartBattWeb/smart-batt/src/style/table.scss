@@ -1,0 +1,166 @@
+@charset "UTF-8";
+$mainColor: rgba(82,91,108,1);
+$mainColorHover: rgba(82,91,108,0.7);
+
+.scrollTable{
+	overflow: hidden;
+	overflow-x: auto;
+	margin: auto;
+	table{
+		// display: table;
+		background:#ffffff;
+		border: 1px solid #cdcdcd;
+		thead{
+			// display: table-header-group;
+			vertical-align: middle;
+			th{
+				// display: table-cell;
+				padding: .75rem;
+				min-width: 105px;
+				// min-width: 100px;
+				vertical-align: middle;
+				background: $mainColor;
+				color: #ffffff;
+				cursor: pointer;
+				&:hover {
+					background:$mainColorHover
+				}
+				&.hide {
+					display: none;
+				}
+				@media screen and (max-width: 768px) {
+					// min-width: 135px;
+					min-width: 145px;
+				}
+			}
+		}
+		tbody{
+			display: table-row-group;
+			color: #333333;
+			background: #FFFFFF;
+			tr:nth-child(even) {
+				background: #dee2e6;
+			}
+			th{ background: $mainColor;color: #ffffff}
+			td {
+				display: table-cell;
+				padding: .75rem;
+				white-space: nowrap;
+				border-right: 1px dashed #cdcdcd;
+				&:nth-last-child(1) {
+					border-right: none;
+				}
+				&.hide {
+					display: none;
+				}
+			}
+		}
+		// tr{display: table-row-group}
+		&.fixedHeight {
+			tbody{
+				tr{
+					vertical-align: top;
+					overflow: hidden;
+					td{
+						min-width: 130px;
+						padding: 0.25rem .5rem;
+						&:nth-child(1){
+							min-width: 10px;
+							width: 50px;
+						}
+						&:nth-last-child(1){
+							min-width: 10px;
+							width: 50px;
+						}
+					}
+				}
+			}
+		}
+		// cofing icon style
+		.td_btn-config {
+			cursor: pointer;
+			&:hover {
+				color: #888888;
+			}
+		}
+	}
+}
+
+
+
+// 頁籤
+.pagination{
+	display: flex;
+	justify-content: center;
+	margin: 1.8rem 0;
+	li{
+		&.active{
+			a{
+				background: #525b6c;
+				color: #ffffff;
+			}
+		}
+		a{
+			padding: 0.5rem;
+			color: #525b6c;
+			text-decoration: none;
+			&:hover {
+				background: #868c98;
+				color: #ffffff;
+			}
+		}
+	}
+	
+}
+
+
+
+
+
+// 電池歷史-電池組資本資訊表格
+.battGroupIDTable {
+	display: inline-table;
+    width: 100%;
+    border: 1px solid #cdcdcd;
+    border-bottom: 0;
+	&-item{
+		display: table-row-group;
+		padding:0;
+	}
+	&-label{
+		display: table-cell;
+		margin: auto;
+		padding:0;
+		vertical-align: middle;
+		width: 50%;
+		background: $mainColor;
+		color: #ffffff;
+		border-bottom: 1px solid #cdcdcd;
+	}
+	&-value{
+		display: table-cell;
+		border-bottom: 1px solid #cdcdcd;
+	}
+
+}
+
+
+
+
+
+// 伸展盒子
+.table-sliderbox{
+	position: relative;
+	height: 20px;
+	overflow: hidden;
+	transition: all 0.4s ease-in-out;
+	-webkit-stransition: all 0.4s ease-in-out;
+	&.open {
+		height: auto;
+	}
+	&--contorl{
+		position: absolute;
+		right: 0;
+		cursor: pointer;
+	}
+}

@@ -1,0 +1,1323 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Random;
+import com.cloudhopper.commons.charset.CharsetUtil;
+import org.smpp.*;
+import org.smpp.TCPIPConnection;
+import org.smpp.pdu.*;
+import org.smpp.debug.Debug;
+import org.smpp.debug.Event;
+import org.smpp.debug.FileDebug;
+import org.smpp.debug.FileEvent;
+import org.smpp.util.Queue;
+import org.smpp.util.ByteBuffer;
+
+
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+
+import tw.com.aptg.ws.api.core.profileservice.Profile;
+import tw.com.aptg.ws.api.core.profileservice.ProfileService;
+import tw.com.aptg.ws.api.core.profileservice.ProfileService_Service;
+
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+
+public class smsSend {
+
+	private static final Logger logger = LogManager.getFormatterLogger(smsSend.class.getName());
+	
+	
+	//private static final int MAX_MULTIPART_MSG_SEGMENT_SIZE_UCS2 = 134;
+	private static final int MAX_MULTIPART_MSG_SEGMENT_SIZE_UCS2 = 126;
+	private static final int MAX_SINGLE_MSG_SEGMENT_SIZE_UCS2 = 70;
+	private static final int MAX_MULTIPART_MSG_SEGMENT_SIZE_7BIT = 153;
+	private static final int MAX_SINGLE_MSG_SEGMENT_SIZE_7BIT = 160;
+	static int isLongMsg =0;
+
+	String DB_URL = "";
+	String USER = "";
+	String PASS = "";
+
+	Connection conn = null,conn1 = null,conn2 = null;
+	Statement stmt = null,stmt1 = null,stmt2 = null;
+	Statement p_stmt = null;
+	ResultSet rs, p_rs,rs1,rs2;
+
+	Properties properties = new Properties();
+	static Session session = null;
+	static int queryTimesLog = 300;
+	static int rebindSmscTime = 3000;
+	static  int enquery_link_Time =30;
+	static int stopProcess = 0;
+	static int smsSeqStart =100000000;
+	
+	boolean bound = false;
+	String ipAddress = null;
+	int port = 0;
+	String systemId = null;
+	String password = null;
+	String bindOption = "t";
+	String sid ="";
+
+	boolean asynchronous = false;
+	SMPPTestPDUEventListener pduListener = null;
+
+	AddressRange addressRange = new AddressRange();
+
+	String systemType = "";
+	String serviceType = "";
+	Address sourceAddress = new Address();
+	Address destAddress = new Address();
+	String scheduleDeliveryTime = "";
+	String validityPeriod = "";
+	String shortMessage = "";
+	int numberOfDestination = 1;
+	String messageId = "";
+	byte esmClass = 0;
+	byte protocolId = 0;
+	byte priorityFlag = 0;
+	byte registeredDelivery = 0;
+	byte replaceIfPresentFlag = 0;
+	byte dataCoding = 0;
+	byte smDefaultMsgId = 0;
+	long receiveTimeout = Data.RECEIVE_BLOCKING;
+
+	String callBackUrl = "";
+	String callBackNumStr = "";
+	ByteBuffer callBackNumber = new ByteBuffer();
+	String chineseCharacter = "UnicodeBigUnmarked"; // big5
+
+	// String A_NUM , B_NUM , MSG ,SMS_SEQ;
+	String psSeq = "";
+	String smSeq = "";
+	String  A_NUM ="";
+	String  B_NUM="";
+	String  MSG="";
+	String  SMS_SEQ="";
+    
+	//Orig sms req
+	String orig_contract = "";
+	String orig_sender_id = "";
+	String orig_sender = "";
+	String orig_status = "";
+	
+	//Api get Profile
+	String api_profile_id = "";
+    String api_profile_status ="";
+    String api_profile_msisdn = "";
+	
+	String crm_sms_status ="";
+	
+	int r_msgcount = 0;
+	int t_msgcount = 0, t_finish = 0;
+
+	public smsSend() throws IOException {
+		//getConfig();
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// SmppObject.setDebug(debug);
+		// SmppObject.setEvent(event);
+		logger.info("Initialising...------------------------------------------------------------------");
+		smsSend startap = null;
+		int loop_count=0;
+		
+		try {
+			startap = new smsSend();
+
+			if (startap != null) {
+
+				while (true)
+				{
+				
+				 
+				 
+				 startap.getConfig();	
+				 
+				 if(stopProcess > 0) {
+					 logger.info("Stop Process----------------------------------------------------------------- ");
+					 break;
+				 }
+				startap.bind();
+
+				// Thread.sleep(2000);
+				startap.loop();
+
+				// loop();
+				// startap.submit();
+
+		        startap.unbind();
+				}
+
+			}
+
+		} catch (Exception e) {
+
+			startap.unbind();
+			logger.error("exception initialising SMPPTest " + e);
+
+		}
+
+	}
+
+	private void loop() {
+
+		try {
+
+			logger.info("Connecting to database...");
+			Class.forName("com.mysql.jdbc.Driver");
+
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			String sql = "select sms_seq,a_num,b_num,msg,status,msg_id,sms_box_seq,ret_string from sms_send_msg where now() > target_time and status ='O'";
+
+			// logger.info((sql);
+
+			int loop_count=0;
+			int total_count=0;
+			int enquery_link =0;
+			
+			while (true) {
+
+				Thread.sleep(1000);
+				loop_count++;
+				total_count++;
+				enquery_link++;
+				rs = stmt.executeQuery(sql);
+				int rec_count = 0;
+				t_finish = 0;
+				
+				if(enquery_link > enquery_link_Time){
+					logger.info("enquery_link "+ enquery_link_Time+ " secs");
+					enquireLink();
+					enquery_link =0;
+					getConfig();
+					//QuerySM();
+					
+					 if(stopProcess > 0) {
+					 logger.info("Stop Process =1");
+					 break;
+				 }
+					
+					
+				}
+				
+				if(loop_count > queryTimesLog) {
+					logger.info("Runnging Query DB "+ queryTimesLog+ " times");
+					
+					loop_count =0;
+					
+				}
+				
+				
+				if(total_count > rebindSmscTime) {
+					
+					stmt.close();
+					rs.close();
+					conn.close();
+					
+					logger.info("rebindSmscTime "+ rebindSmscTime+ " secs");
+					logger.info("Close database...");
+					
+					
+					
+					break;
+				}
+					
+				while (rs.next()) {
+
+					A_NUM ="";
+					B_NUM="";
+					MSG="";
+					SMS_SEQ="";
+                    
+					messageId = "";
+					api_profile_msisdn ="";
+
+					// Thread.sleep(2);
+					rec_count++;
+
+					rs.updateString("status", "P");
+					rs.updateRow();
+					
+					String A_NUM = rs.getString("a_num");
+					String B_NUM = rs.getString("b_num");
+					String MSG = rs.getString("msg");
+					String SMS_SEQ = Integer.toString(rs.getInt("sms_seq"));
+					String SMS_BOX_SEQ = rs.getString("sms_box_seq");
+					
+					String submit_status="";
+					String ret_msg ="";
+
+					logger.info("DB Recod Count =" + Integer.toString(rec_count));
+					logger.info("SMS_SEQ=" + SMS_SEQ + ",A_NUM=" + A_NUM + ",B_NUM=" + B_NUM + ",MSG=" + MSG);
+
+					
+					GetOrginProfile(SMS_BOX_SEQ);
+					
+					
+					GetProfile(orig_contract);
+					GetSmsStatus(orig_contract);
+					
+					if(crm_sms_status.equals("N"))
+					{
+						ret_msg =ret_msg+"無簡訊服務";
+						submit_status="F";
+					}
+					
+					
+					
+					
+					
+					if(!api_profile_status.equals("9"))
+					{
+						ret_msg =ret_msg+"非有效合約";
+						submit_status="F";
+					}
+					
+					
+					if(orig_status.equals("D"))
+					{
+						ret_msg =ret_msg+"客戶已取消";
+						submit_status="F";
+					}
+					
+					
+					if(!orig_sender_id.equals(api_profile_id))
+					{
+					    ret_msg =ret_msg+"證號不同";
+						submit_status="F";
+					}
+					
+					
+					
+					if(!A_NUM.equals(api_profile_msisdn))
+					{
+					    ret_msg =ret_msg+"門號不同,ms_diff,Old="+A_NUM+",New="+api_profile_msisdn;
+					    //submit_status="F";
+						
+						A_NUM = api_profile_msisdn;
+					}
+					
+					logger.info("ret_msg = "+ ret_msg);
+					
+					if(!submit_status.equals("F"))
+					if(submit(SMS_SEQ,A_NUM,B_NUM,MSG))
+						submit_status ="C";
+					else {
+                        submit_status ="F";
+					    ret_msg +="Submit Error";
+					}
+					Date f_Date = new Date();
+					DateFormat f_DateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+					String f_time = f_DateFormat.format(f_Date);
+
+					logger.info("f_time =" + f_time);
+					//rs.updateString("msg_id", messageId);
+					rs.updateString("status", submit_status);
+					//rs.updateString("finish_time", f_time);
+					rs.updateString("ret_string", ret_msg );
+					rs.updateRow();
+					// logger.info("ret_msg = " +ret_msg );
+
+					logger.info(
+							"end line ---------------------------------------------------------------------------------------------------------------------------------------------");
+				}
+
+				
+			}
+
+		} catch (Exception e) {
+			// conn.close();
+			logger.error("Got an exception! " + e);
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			logger.error("System Exit " );
+			System.exit(1); 
+
+		}
+
+	}
+
+	private void GetOrginProfile(String s_id) throws Exception{
+		
+		
+		    logger.info("GetOrginProfile...Start");
+			logger.info("s_id="+s_id);
+		    logger.info("Connecting to database...");
+			Class.forName("com.mysql.jdbc.Driver");
+
+			orig_contract = "";
+	        orig_sender_id = "";
+	        orig_sender = "";
+	        orig_status = "";
+			
+			conn2 = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			
+			PreparedStatement preparedStatement = null;
+			
+			//stmt1 = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		
+			String sql = "select contract,sender_id,sender,status,s_id from sms_req where s_id=?";
+			
+			
+			preparedStatement = conn2.prepareStatement(sql);
+
+			preparedStatement.setString(1, s_id);
+			
+			rs2 = preparedStatement.executeQuery();
+			
+			while (rs2.next()) {
+
+				 orig_contract = rs2.getString("contract");
+				 orig_sender_id = rs2.getString("sender_id");
+				 orig_sender = rs2.getString("sender");
+				 orig_status = rs2.getString("status");
+
+				logger.info("orig_contract="+orig_contract+",orig_sender_id="+orig_sender_id+",orig_sender="+orig_sender+",orig_status="+orig_status);
+
+			}
+			
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (conn2 != null) {
+				conn2.close();
+			}
+
+		
+            
+		
+		
+		logger.info("GetOrginProfile...End");
+		
+		//return contract;
+		
+	}
+	
+	
+	private void GetSmsStatus(String contract_id) throws Exception{
+		
+		
+		String USER_AGENT = "Mozilla/5.0";
+		//String url ="http://10.31.79.18:4312/cmsweb/CWS/GetVoiceBasicStatus.jsp?command=GetVoiceBasicStatus&MDN=&contractId=4G-16030900226&ServiceID=SMS&system=MSG&channelId=MSG";
+
+		String url ="http://10.31.79.18:4312/cmsweb/CWS/GetVoiceBasicStatus.jsp?command=GetVoiceBasicStatus&MDN=&contractId="+contract_id+"&ServiceID=SMS&system=MSG&channelId=MSG";
+
+		
+		URL obj = new URL(url);
+		
+		
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+      	
+		
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", USER_AGENT);
+		con.setRequestProperty("Content-Type", "text/xml;charset=utf-8");
+		con.setRequestProperty("Content-Length", "length");
+				
+		String urlParameters="";
+		
+		// Send post request
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+
+		int responseCode = con.getResponseCode();
+		logger.info("Check SMS Status URL : " + url);
+		//logger.info("Post parameters : " + urlParameters);
+		logger.info("Response Code : " + responseCode);
+
+		BufferedReader in = new BufferedReader(
+	    new InputStreamReader(con.getInputStream(),"Big5"));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		String xml_result = response.toString();
+		logger.info("Response =" +xml_result);
+		
+		String f_str = "<ApplyStatus>Y</ApplyStatus>";
+		int j = xml_result.indexOf(f_str, 1);
+	 
+	    if (j > 0){
+          logger.info("SMS Status: Y");	
+          crm_sms_status ="Y";	
+		}		  
+		else {
+		 logger.info("SMS Status: N"); 	
+		  crm_sms_status ="N";
+		}
+		
+		
+	}	
+	
+	
+	
+	
+	private void GetProfile(String contract_id) throws Exception{
+		
+		
+		  logger.info("Invoking GetProfile...");
+		  logger.info("contract_id=" + contract_id);
+		
+		
+		 api_profile_id = "";
+         api_profile_status ="";
+         api_profile_msisdn = "";
+		
+		
+		 QName SERVICE_NAME = new QName("http://www.aptg.com.tw/ws/api/core/ProfileService", "ProfileService");
+
+		 
+		 URL wsdlURL = ProfileService_Service.WSDL_LOCATION;
+		 
+		 /*
+        if (args.length > 0 && args[0] != null && !"".equals(args[0])) {
+            File wsdlFile = new File(args[0]);
+            try {
+                if (wsdlFile.exists()) {
+                    wsdlURL = wsdlFile.toURI().toURL();
+                } else {
+                    wsdlURL = new URL(args[0]);
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }*/
+
+        ProfileService_Service ss = new ProfileService_Service(wsdlURL, SERVICE_NAME);
+        ProfileService port = ss.getProfileServicePort();
+		 
+		 
+		 
+		 
+		 String _getUserProfile_serviceID = "apt_msg";
+         String _getUserProfile_servicePWD = "msg1234";
+		 
+         String _getUserProfile_userID = "";
+         String _getUserProfile_contractID = contract_id;
+         String _getUserProfile_mdn = "";
+         String _getUserProfile_min = "";
+         String _getUserProfile_email = "";
+		  
+		 tw.com.aptg.ws.api.core.profileservice.Response _getUserProfile__return = port.getUserProfile(_getUserProfile_serviceID, _getUserProfile_servicePWD, _getUserProfile_userID, _getUserProfile_contractID, _getUserProfile_mdn, _getUserProfile_min, _getUserProfile_email);
+		Profile profile = _getUserProfile__return.getProfile();      
+        api_profile_id = profile.getPersonalID();
+        api_profile_status =profile.getContractStatusCode();
+        api_profile_msisdn = profile.getMdn();
+        
+        logger.info("getUserProfile.result=" + api_profile_id+","+api_profile_status+","+api_profile_msisdn);
+
+		 logger.info("GetProfile...End");
+		 
+		
+	}
+	
+	
+	private void InsertMsgId(String a_num,String msgid,String smsid) throws Exception{
+		
+		    logger.info("InsertMsgId...Start");
+			logger.info("smsid"+smsid+"msgid="+msgid);
+		    logger.info("Connecting to database...");
+			Class.forName("com.mysql.jdbc.Driver");
+
+			
+			
+			conn1 = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			
+			PreparedStatement preparedStatement = null;
+			
+			//stmt1 = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		
+			String sql = "INSERT INTO sms_msg_id" + "(a_num,sms_id, msg_id) VALUES" + "(?,?,?)";
+			
+			
+			preparedStatement = conn1.prepareStatement(sql);
+
+			preparedStatement.setString(1, a_num);
+			preparedStatement.setString(2, smsid);
+			preparedStatement.setString(3, msgid);
+			
+			
+			preparedStatement.executeUpdate();
+			
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (conn1 != null) {
+				conn1.close();
+			}
+
+		
+            
+		
+		
+		logger.info("InsertMsgId...End");
+	}
+	
+	private void QuerySM() throws Exception{
+		
+		    logger.info("QuerySM...Start");
+		    logger.info("Connecting to database...");
+			Class.forName("com.mysql.jdbc.Driver");
+
+			conn2 = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			stmt2 = conn2.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			String sql = "select mid_seq,a_num,msg_id,ret_string,ret_code,ret_state,ret_finaldate from msgweb.sms_msg_id b where ret_string ='I' and a_num is not null ";
+
+			// logger.info((sql);
+            String ret_str ="";
+		   rs2 = stmt2.executeQuery(sql);
+			
+			while (rs2.next())  {
+				
+				String mid_seq = Integer.toString(rs2.getInt("mid_seq"));
+				
+				String msg_id = rs2.getString("msg_id");
+				String a_num = rs2.getString("a_num");
+				
+				//String a_num ="0973291018";
+				
+				logger.info("mid_seq=" + mid_seq +",msg_id=" + msg_id +",a_num=" + a_num );
+				
+
+                ret_str ="";
+				
+				String Q_ret = querySM(a_num,msg_id);
+				String[] retarray = Q_ret.split("-"); 
+				
+				//rs2.updateString("ret_string", ret_str);
+				rs2.updateString("ret_code", retarray[3]);
+				rs2.updateString("ret_state", retarray[2]);
+				rs2.updateString("ret_finaldate", retarray[1]);
+				rs2.updateRow();
+				
+				/*
+				for (String MsgId : MsgIdarray) {
+                  logger.info("SMS_SEQ=" + SMS_SEQ +",A_num=" + A_num +",Msg_Id=" + MsgId);
+				  String Q_ret = querySM(A_num,MsgId);
+				  //logger.info("Q_ret="+ Q_ret);
+				  ret_str=ret_str+Q_ret+",";
+				  //logger.info("ret_str="+ ret_str);
+				  
+                }*/
+				
+				//logger.info("ret_string="+ret_str);
+				//rs1.updateString("ret_string", ret_str);
+				//rs1.updateRow();
+			}
+			
+			
+			stmt2.close();
+			rs2.close();
+			conn2.close();
+		
+		
+		logger.info("QuerySM...End");
+	}
+	
+	
+	
+	private String querySM(String aNum,String msgId) {
+		logger.info("SMPPTest.query()");
+		String ret_str ="";
+		
+		try {
+			
+			QuerySM request = new QuerySM();
+			QuerySMResp response;
+
+			// input values
+			//messageId = getParam("Message id", messageId);
+			//sourceAddress = getAddress("Source", sourceAddress);
+            sourceAddress.setAddress("20100001886" + aNum.substring(1));
+			String mId = msgId;
+			
+			
+			
+			// set values
+			request.setMessageId(mId);
+			request.setSourceAddr(sourceAddress);
+
+			// send the request
+			logger.info("Query request " + request.debugString());
+			if (asynchronous) {
+				session.query(request);
+			} else {
+				response = session.query(request);
+				logger.info("Query response " + response.debugString());
+				String f_date = response.getFinalDate();
+				String MsgState =Byte.toString(response.getMessageState());
+				String ErrCode = Byte.toString(response.getErrorCode());
+				
+				ret_str = "-"+f_date +"-"+ MsgState +"-"+ ErrCode;
+				
+				logger.info(ret_str);
+				//messageId = response.getMessageId();
+				//logger.info("messageId =" + messageId);
+				
+			}
+
+		} catch (Exception e) {
+			//event.write(e, "");
+			//logger.info("Query operation failed. " + e);
+			logger.error("Query operation failed. " + e);
+			logger.error("System Exit " );
+			System.exit(1); 
+		} 
+		
+		    //logger.info(ret_str);
+			logger.info("query finish..");
+			//logger.info(ret_str);
+			return ret_str;
+			
+		
+		
+		
+	}
+	
+	/**
+	 * Gets a property and converts it into byte.
+	 */
+	private byte getByteProperty(String propName, byte defaultValue) {
+		return Byte.parseByte(properties.getProperty(propName, Byte.toString(defaultValue)));
+	}
+
+	/**
+	 * Gets a property and converts it into integer.
+	 */
+	private int getIntProperty(String propName, int defaultValue) {
+		return Integer.parseInt(properties.getProperty(propName, Integer.toString(defaultValue)));
+	}
+
+	private void setAddressParameter(String descr, Address address, byte ton, byte npi, String addr) {
+		address.setTon(ton);
+		address.setNpi(npi);
+		try {
+			address.setAddress(addr);
+		} catch (WrongLengthOfStringException e) {
+			logger.error("The length of " + descr + " parameter is wrong.");
+		}
+	}
+
+	private void getConfig() {
+
+		String Config_f = "config.properties";
+
+		byte ton;
+		byte npi;
+		String addr;
+
+		String bindMode;
+		int rcvTimeout;
+		String syncMode;
+
+		try {
+			
+			
+			logger.info("Load Config ......");
+			properties.load(new FileInputStream(Config_f));
+
+			
+			
+			DB_URL = properties.getProperty("MySqlUrl");
+			USER = properties.getProperty("username");
+			PASS = properties.getProperty("password");
+			
+			queryTimesLog = Integer.parseInt(properties.getProperty("queryTimesLog"));
+			rebindSmscTime = Integer.parseInt(properties.getProperty("rebindSmscTime"));
+			stopProcess =Integer.parseInt(properties.getProperty("stopProcess"));
+			enquery_link_Time =Integer.parseInt(properties.getProperty("enquery_link_Time"));
+
+			ipAddress = properties.getProperty("ip-address");
+			port = getIntProperty("port", port);
+			systemId = properties.getProperty("system-id");
+			password = properties.getProperty("smsc_password");
+			
+			sid=properties.getProperty("sid");
+
+			ton = getByteProperty("addr-ton", addressRange.getTon());
+			npi = getByteProperty("addr-npi", addressRange.getNpi());
+			addr = properties.getProperty("address-range", addressRange.getAddressRange());
+
+			addressRange.setTon(ton);
+			addressRange.setNpi(npi);
+
+			try {
+				addressRange.setAddressRange(addr);
+			} catch (WrongLengthOfStringException e) {
+				logger.error("The length of address-range parameter is wrong.");
+			}
+
+			ton = getByteProperty("source-ton", sourceAddress.getTon());
+			npi = getByteProperty("source-npi", sourceAddress.getNpi());
+			addr = properties.getProperty("source-address", sourceAddress.getAddress());
+			setAddressParameter("source-address", sourceAddress, ton, npi, addr);
+
+			ton = getByteProperty("destination-ton", destAddress.getTon());
+			npi = getByteProperty("destination-npi", destAddress.getNpi());
+			addr = properties.getProperty("destination-address", destAddress.getAddress());
+			setAddressParameter("destination-address", destAddress, ton, npi, addr);
+
+			serviceType = properties.getProperty("service-type", serviceType);
+			systemType = properties.getProperty("system-type", systemType);
+			bindMode = properties.getProperty("bind-mode", bindOption);
+			bindOption = bindMode;
+
+			if (receiveTimeout == Data.RECEIVE_BLOCKING) {
+				rcvTimeout = -1;
+			} else {
+				rcvTimeout = ((int) receiveTimeout) / 1000;
+			}
+			rcvTimeout = getIntProperty("receive-timeout", rcvTimeout);
+			if (rcvTimeout == -1) {
+				receiveTimeout = Data.RECEIVE_BLOCKING;
+			} else {
+				receiveTimeout = rcvTimeout * 1000;
+			}
+
+			syncMode = properties.getProperty("sync-mode", (asynchronous ? "async" : "sync"));
+			if (syncMode.equalsIgnoreCase("sync")) {
+				asynchronous = false;
+			} else if (syncMode.equalsIgnoreCase("async")) {
+				asynchronous = true;
+			} else {
+				asynchronous = false;
+			}
+
+			//shortMessage = properties.getProperty("the-short-message", shortMessage);
+			dataCoding = getByteProperty("data-encoding", dataCoding);
+			//callBackUrl = properties.getProperty("callback-url", callBackUrl);
+			//callBackNumStr = properties.getProperty("callback-number", callBackNumStr);
+
+			registeredDelivery = getByteProperty("registeredDelivery", registeredDelivery);
+
+			Date f_Date = new Date();
+			DateFormat f_DateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			psSeq = "Ps-Seq-" + f_DateFormat.format(f_Date);
+
+			logger.info("psSeq=" + psSeq);
+
+		} catch (FileNotFoundException localFileNotFoundException) {
+			localFileNotFoundException.printStackTrace();
+		} catch (IOException localIOException) {
+			localIOException.printStackTrace();
+		}
+	}
+
+	private void bind() {
+		logger.info("SMPPTest.bind()");
+		try {
+
+			if (bound) {
+				logger.info("Already bound, unbind first.");
+				return;
+			}
+
+			BindRequest request = null;
+			BindResponse response = null;
+			// String syncMode = (asynchronous ? "a" : "s");
+
+			// type of the session
+			// syncMode = getParam("Asynchronous/Synchronnous Session? (a/s)", syncMode);
+			/*
+			 * if (syncMode.compareToIgnoreCase("a") == 0) { asynchronous = true; } else if
+			 * (syncMode.compareToIgnoreCase("s") == 0) { asynchronous = false; } else {
+			 * log("Invalid mode async/sync, expected a or s, got " + syncMode +
+			 * ". Operation canceled."); return; }
+			 */
+			// input values
+			// bindOption = getParam("Transmitter/Receiver/Transciever (t/r/tr)",
+			// bindOption);
+
+			if (bindOption.compareToIgnoreCase("t") == 0) {
+				request = new BindTransmitter();
+			} else if (bindOption.compareToIgnoreCase("r") == 0) {
+				request = new BindReceiver();
+			} else if (bindOption.compareToIgnoreCase("tr") == 0) {
+				request = new BindTransciever();
+			} else {
+				logger.info("Invalid bind mode, expected t, r or tr, got " + bindOption + ". Operation canceled.");
+				return;
+			}
+
+			// ipAddress = getParam("IP address of SMSC", ipAddress);
+			// port = getParam("Port number", port);
+
+			TCPIPConnection connection = new TCPIPConnection(ipAddress, port);
+			connection.setReceiveTimeout(20 * 1000);
+			session = new Session(connection);
+
+			// systemId = getParam("Your system ID", systemId);
+			// password = getParam("Your password", password);
+
+			// set values
+			request.setSystemId(systemId);
+			request.setPassword(password);
+			request.setSystemType(systemType);
+			request.setInterfaceVersion((byte) 0x34);
+			request.setAddressRange(addressRange);
+
+			// send the request
+			logger.info("Bind request " + request.debugString());
+			if (asynchronous) {
+				pduListener = new SMPPTestPDUEventListener(session, psSeq);
+				response = session.bind(request, pduListener);
+			} else {
+				response = session.bind(request);
+			}
+			logger.info("Bind response " + response.debugString());
+			if (response.getCommandStatus() == Data.ESME_ROK) {
+				bound = true;
+			}
+
+		} catch (Exception e) {
+			// event.write(e, "");
+			// debug.write("Bind operation failed. " + e);
+			logger.info("Bind operation failed. " + e);
+		} finally {
+			// debug.exit(this);
+			logger.info("bind finish");
+		}
+	}
+
+	
+	
+	private void enquireLink() {
+		logger.info("SMPPTest.enquireLink()");
+		try {
+
+			EnquireLink request = new EnquireLink();
+			EnquireLinkResp response;
+			logger.info("Enquire Link request " + request.debugString());
+			if (asynchronous) {
+				session.enquireLink(request);
+			} else {
+				response = session.enquireLink(request);
+				logger.info("Enquire Link response " + response.debugString());
+			}
+
+		} catch (Exception e) {
+			//event.write(e, "");
+			//debug.write("Enquire Link operation failed. " + e);
+			logger.error("Enquire Link operation failed. " + e);
+			logger.error("System Exit " );
+			System.exit(1); 
+		} finally {
+			//debug.exit(this);
+			logger.info("enquireLink finish");
+		}
+	}
+	
+	
+	
+	
+	
+	private void unbind() {
+		logger.info("SMPPTest.unbind()");
+		try {
+
+			if (!bound) {
+				logger.info("Not bound, cannot unbind.");
+				return;
+			}
+
+			// send the request
+			logger.info("Going to unbind.");
+			if (session.getReceiver().isReceiver()) {
+				logger.info("It can take a while to stop the receiver.");
+			}
+			UnbindResp response = session.unbind();
+			logger.info("Unbind response " + response.debugString());
+			bound = false;
+
+		} catch (Exception e) {
+			// event.write(e, "");
+			// debug.write("Unbind operation failed. " + e);
+			logger.info("Unbind operation failed. " + e);
+		} finally {
+			// debug.exit(this);
+			logger.info("unbind finish");
+		}
+	}
+
+	private boolean submit(String sms_seq, String AA, String BB, String msg) {
+		// debug.enter(this, "SMPPTest.submit()");
+		logger.info("SMPPTest.submit()");
+		t_msgcount++;
+		
+		boolean ret = true;
+		
+		
+		try {
+			SubmitSM request = new SubmitSM();
+			SubmitSMResp response;
+
+			// address.setAddress(addr);
+			sourceAddress.setAddress(sid+"886" + AA.substring(1));
+			destAddress.setAddress(BB);
+			
+			shortMessage = msg;
+			callBackNumStr = "";
+			// input values
+			/*
+			 * serviceType = getParam("Service type", serviceType); sourceAddress =
+			 * getAddress("Source", sourceAddress); destAddress = getAddress("Destination",
+			 * destAddress); replaceIfPresentFlag = getParam("Replace if present flag",
+			 * replaceIfPresentFlag); shortMessage = getParam("The short message",
+			 * shortMessage); callBackUrl = getParam("Callback URL", callBackUrl);
+			 * callBackNumStr = getParam("Callback number", callBackNumStr);
+			 * scheduleDeliveryTime =
+			 * getParam("Schedule delivery time[ex:030716092500000R]",
+			 * scheduleDeliveryTime); validityPeriod =
+			 * getParam("Validity period[ex:030716092500000R]", validityPeriod); esmClass =
+			 * getParam("Esm class", esmClass); protocolId = getParam("Protocol id",
+			 * protocolId); priorityFlag = getParam("Priority flag", priorityFlag);
+			 * registeredDelivery = getParam("Registered delivery", registeredDelivery);
+			 * dataCoding = getParam("Data encoding", dataCoding); smDefaultMsgId =
+			 * getParam("Sm default msg id", smDefaultMsgId);
+			 */
+			// ***********************************************************************
+			if (callBackUrl.length() > 7) {
+				serviceType = "WPUSH"; // WPUSH,JAVAD
+				shortMessage = callBackUrl + (char) 0x0B + shortMessage;
+			}
+
+			/*
+			if (callBackNumStr.length() > 0) {
+				if (callBackNumStr.substring(0, 2).equals("09"))
+					callBackNumStr = "886" + callBackNumStr.substring(1);
+				if (callBackNumStr.length() > 0)
+					callBackNumber.appendString("100" + callBackNumStr);
+			}
+			
+			
+			if (BB.length() > 0) {
+				if (BB.substring(0, 2).equals("09")){
+				destAddress.setAddress("886" + BB.substring(1));
+			    }
+				
+			    if (BB.substring(0, 3).equals("002")){
+					destAddress.setAddress(BB.substring(1));
+				}
+			}
+			*/
+			
+
+			// set values
+			// set callback number values
+			if (callBackNumStr.length() > 0)
+			request.setCallbackNum(callBackNumber);
+		
+			request.setServiceType(serviceType);
+			request.setSourceAddr(sourceAddress);
+			request.setDestAddr(destAddress);
+			request.setReplaceIfPresentFlag(replaceIfPresentFlag);
+			
+			String charset ="";
+			
+			
+			if(!isAllASCII(shortMessage)){
+		   charset ="UCS-2";
+		   dataCoding=8;
+			} else {
+		   charset ="UTF-8";
+		   dataCoding=0;
+		 
+				
+			}
+			
+			byte[][] partMsg=getParts(shortMessage,charset);
+			
+			logger.info("charset="+charset);
+			logger.info("dataCoding="+dataCoding);
+			logger.info("isLongMsg="+isLongMsg);
+			
+			
+			if (isLongMsg ==1){
+					esmClass = 0x40;
+				request.setEsmClass(esmClass);
+				}else {
+				esmClass = 0;
+				request.setEsmClass(esmClass);	
+				}
+						
+			request.setScheduleDeliveryTime(scheduleDeliveryTime);
+			request.setValidityPeriod(validityPeriod);
+			request.setEsmClass(esmClass);
+			request.setProtocolId(protocolId);
+			request.setPriorityFlag(priorityFlag);
+			request.setRegisteredDelivery(registeredDelivery);
+			request.setDataCoding(dataCoding);
+			request.setSmDefaultMsgId(smDefaultMsgId);
+
+			// send the request
+
+			int count = 1;
+			//System.out.println();
+			// count = getParam("How many times to submit this message (load test)", count);
+			// for (int i = 0; i < count; i++) {
+				
+				
+				for (byte[] element: partMsg) {
+				// request.assignSequenceNumber(true);
+				
+				String byteStr = element.toString();
+			    logger.info(printbyte(element));
+				
+				if(dataCoding==8){
+		   
+					if(isLongMsg ==1)
+						request.setShortMessage(new String(element, "UnicodeBigUnmarked"), chineseCharacter);
+					else 
+						request.setShortMessage(shortMessage, chineseCharacter);   
+		   		   		
+				} else {
+					if(isLongMsg ==1)	
+						request.setShortMessage(new String(element, "US-ASCII"));
+					else
+						request.setShortMessage(shortMessage);
+				
+				}
+				
+				
+				request.setSequenceNumber(Integer.parseInt(sms_seq)+smsSeqStart);
+				// log("#" + i + " ");
+				logger.info("Submit request " + request.debugString());
+				logger.info("t_msgcount=" + t_msgcount + "," + "r_msgcount=" + r_msgcount + "submit psSeq=" + psSeq
+						+ "seq=" + Integer.toString(request.getSequenceNumber()));
+
+				if (asynchronous) {
+					session.submit(request);
+					// System.out.println();
+				} else {
+					response = session.submit(request);
+					logger.info("Submit response " + response.debugString());
+					messageId = response.getMessageId();
+					//messageId = messageId +","+ msgid;
+					logger.info("messageId=" + messageId);
+					
+					InsertMsgId(AA,messageId,sms_seq);
+					
+				}
+			}
+
+		} catch (Exception e) {
+			// event.write(e, "");
+			// debug.write("Submit operation failed. " + e);
+			logger.error("Submit operation failed. " + e);
+			ret = false;
+		} finally {
+			// debug.exit(this);
+			logger.info("submit finish");
+			
+		}
+		
+		
+		return ret;
+		
+	}
+	
+	
+	private boolean isAllASCII(String input) {
+	    boolean isASCII = true;
+	    for (int i = 0; i < input.length(); i++) {
+	        int c = input.charAt(i);
+	        if (c > 0x7F) {
+	            isASCII = false;
+	            break;
+	        }
+	    }
+	    return isASCII;
+	}
+
+	
+	public static String printbyte(byte[] bytes) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("[ ");
+	    for (byte b : bytes) {
+	        sb.append(String.format("0x%02X ", b));
+	    }
+	    sb.append("]");
+	    return sb.toString();
+	}
+	
+	
+	
+	
+	
+	public static byte[][] getParts(String messageBody, String charSet) {
+	        int maximumSingleMessageSize = 0;
+	        int maximumMultipartMessageSegmentSize = 0;
+	        byte[] byteSingleMessage = null;
+	        if (! CharsetUtil.NAME_UCS_2.equals(charSet)) {
+	            byteSingleMessage = CharsetUtil.encode(messageBody, charSet);
+	            maximumSingleMessageSize = MAX_SINGLE_MSG_SEGMENT_SIZE_7BIT;
+	            maximumMultipartMessageSegmentSize = MAX_MULTIPART_MSG_SEGMENT_SIZE_7BIT;
+	        } else {
+	            byteSingleMessage = CharsetUtil.encode(messageBody, charSet);
+	            maximumSingleMessageSize = MAX_SINGLE_MSG_SEGMENT_SIZE_UCS2;
+	            maximumMultipartMessageSegmentSize = MAX_MULTIPART_MSG_SEGMENT_SIZE_UCS2;
+	        }
+	        byte[][] byteMessagesArray = null;
+	        if (messageBody.length() > maximumSingleMessageSize) {
+	            // split message according to the maximum length of a segment
+				isLongMsg =1;
+	            byteMessagesArray = splitUnicodeMessage(byteSingleMessage, maximumMultipartMessageSegmentSize);
+	            // set UDHI so PDU will decode the header
+	       //     esmClass = new ESMClass(MessageMode.DEFAULT, TrayIcon.MessageType.DEFAULT, GSMSpecificFeature.UDHI);
+	        } else {
+				isLongMsg =0;
+	            byteMessagesArray = new byte[][] { byteSingleMessage };
+	         //   esmClass = new ESMClass();
+	        }
+
+
+	        return  byteMessagesArray;
+	    }
+
+	private static byte[][] splitUnicodeMessage(byte[] aMessage, Integer maximumMultipartMessageSegmentSize) {
+
+	        final byte UDHIE_HEADER_LENGTH = 0x05;
+	        final byte UDHIE_IDENTIFIER_SAR = 0x00;
+	        final byte UDHIE_SAR_LENGTH = 0x03;
+
+	        // determine how many messages have to be sent
+			
+			
+			
+	        int numberOfSegments = aMessage.length / maximumMultipartMessageSegmentSize;
+	        int messageLength = aMessage.length;
+			
+			logger.info(maximumMultipartMessageSegmentSize+","+numberOfSegments+","+messageLength+",");
+			
+			
+	        if (numberOfSegments > 255) {
+	            numberOfSegments = 255;
+	            messageLength = numberOfSegments * maximumMultipartMessageSegmentSize;
+	        }
+	        if ((messageLength % maximumMultipartMessageSegmentSize) > 0) {
+	            numberOfSegments++;
+	        }
+
+			
+			logger.info(maximumMultipartMessageSegmentSize+","+numberOfSegments+","+messageLength+",");
+	        // prepare array for all of the msg segments
+	        byte[][] segments = new byte[numberOfSegments][];
+
+	        int lengthOfData;
+
+	        // generate new reference number
+	        byte[] referenceNumber = new byte[1];
+	        new Random().nextBytes(referenceNumber);
+
+	        // split the message adding required headers
+	        for (int i = 0; i < numberOfSegments; i++) {
+	            if (numberOfSegments - i == 1) {
+	                lengthOfData = messageLength - i * maximumMultipartMessageSegmentSize;
+	            } else {
+	                lengthOfData = maximumMultipartMessageSegmentSize;
+	            }
+
+	            // new array to store the header
+	            segments[i] = new byte[6 + lengthOfData];
+
+	            // UDH header
+	            // doesn't include itself, its header length
+	            segments[i][0] = UDHIE_HEADER_LENGTH;
+	            // SAR identifier
+	            segments[i][1] = UDHIE_IDENTIFIER_SAR;
+	            // SAR length
+	            segments[i][2] = UDHIE_SAR_LENGTH;
+	            // reference number (same for all messages)
+	            segments[i][3] = referenceNumber[0];
+	            // total number of segments
+	            segments[i][4] = (byte) numberOfSegments;
+	            // segment number
+	            segments[i][5] = (byte) (i + 1);
+
+	            // copy the data into the array
+	            System.arraycopy(aMessage, (i * maximumMultipartMessageSegmentSize), segments[i], 6, lengthOfData);
+
+	        }
+	        return segments;
+	    }
+
+	
+	
+	
+	
+	private class SMPPTestPDUEventListener extends SmppObject implements ServerPDUEventListener {
+		Session session;
+		Queue requestEvents = new Queue();
+		String listen_psseq = "";
+
+		public SMPPTestPDUEventListener(Session session, String lsn_psseq) {
+			this.session = session;
+			this.listen_psseq = lsn_psseq;
+		}
+
+		public void handleEvent(ServerPDUEvent event) {
+			PDU pdu = event.getPDU();
+			if (pdu.isRequest()) {
+				logger.info("async request received, enqueuing " + pdu.debugString());
+				synchronized (requestEvents) {
+					requestEvents.enqueue(event);
+					requestEvents.notify();
+				}
+			} else if (pdu.isResponse()) {
+				r_msgcount++;
+				logger.info("t_msgcount=" + t_msgcount + "," + "r_msgcount=" + r_msgcount + ",listen_psseq="
+						+ listen_psseq + "seq=" + Integer.toString(pdu.getSequenceNumber()));
+				logger.info("async response received " + pdu.debugString());
+				// if (t_msgcount == r_msgcount)
+				// unbind();
+			} else {
+				logger.info("pdu of unknown class (not request nor " + "response) received, discarding "
+						+ pdu.debugString());
+			}
+		}
+
+	}
+
+}

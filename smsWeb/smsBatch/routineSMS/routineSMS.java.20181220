@@ -1,0 +1,251 @@
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+public class routineSMS {
+
+	private static final Logger logger = LogManager.getFormatterLogger(routineSMS.class.getName());
+
+	static String DB_URL = "";
+	static String USER = "";
+	static String PASS = "";
+
+	static Connection conn = null;
+	static Statement stmt = null;
+	static Statement p_stmt = null;
+	static ResultSet rs, p_rs;
+
+	static Properties properties = new Properties();
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		logger.info("Initialising...-----------------------------------");
+
+		getConfig();
+		loop();
+
+	}
+
+	private static void loop() {
+
+		try {
+
+			logger.info("Connecting to database...");
+			Class.forName("com.mysql.jdbc.Driver");
+
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			p_stmt = conn.createStatement();
+			
+			String sql="",sql1="",sql2="",sql3="";
+			String selectoption="",selectoption1="",selectoption2="",selectoption3="";
+			
+			
+			
+			selectoption1="selectedRoutineOption-daily";
+			sql1 = "select trim(concat(replace(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),'.',':'),':00')) as t_time,s_id,sender,msisdn_lst,trim(msg_content) as msg_content";
+    		sql1 +=" from msgweb.sms_req ";
+ 	 		sql1 +=" where 1=1 ";
+			sql1 +=" and status ='I' ";
+			sql1 +=" and time_spec like '%selectedRoutineOption-daily%' "; 
+			sql1 += " and DATE_FORMAT(now(),'%Y/%m/%d') >= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',1) ";
+			sql1 += " and DATE_FORMAT(now(),'%Y/%m/%d') <= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',-1) ";
+			sql1 +=" and concat(s_id,'#',sender,'#',concat(DATE_FORMAT(now(),'%Y-%m-%d'),' ',concat(replace(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),'.',':'),':00'))) not in (select concat(sms_box_seq,'#',a_num,'#',target_time) from msgweb.sms_send_msg)";
+
+			
+			
+			
+            selectoption2="selectedRoutineOption-weekly";
+            sql2 =  "select trim(concat(replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00')) as t_time";
+            // sql += ",trim(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';weekdays-',-1)) as weekly"
+            sql2 += " ,s_id,sender,msisdn_lst,trim(msg_content) as msg_content"; 
+            sql2 += " from msgweb.sms_req ";
+            sql2 += " where 1=1";
+            sql2 += " and status ='I'";
+            sql2 += " and time_spec like '%selectedRoutineOption-weekly%' ";
+            sql2 += " and concat(s_id,'#',sender,'#',DATE_FORMAT(now(),'%Y-%m-%d'),' ',replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00') not in (select concat(sms_box_seq,'#',a_num,'#',target_time) from msgweb.sms_send_msg)	";
+        	sql2 += " and DATE_FORMAT(now(),'%Y/%m/%d') >= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',1) ";
+			sql2 += " and DATE_FORMAT(now(),'%Y/%m/%d') <= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',-1) ";
+			sql2 += " and INSTR( time_spec, trim(DATE_FORMAT(now(),'%a')) )  > 0";
+			
+			
+			
+			selectoption3="selectedRoutineOption-monthly";		
+			sql3 = "select trim(concat(replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00')) as t_time";
+			//sql += " ,trim(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, ';monthdays-', -1),';',1)) as dayofmonth "
+			sql3 += " ,s_id,sender,msisdn_lst,trim(msg_content) as msg_content";
+			sql3 += " from msgweb.sms_req ";
+			sql3 += " where 1=1 ";
+			sql3 += " and status ='I' ";
+			sql3 += " and time_spec like '%selectedRoutineOption-monthly%' ";
+			sql3 += " and concat(s_id,'#',sender,'#',DATE_FORMAT(now(),'%Y-%m-%d'),' ',replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00') not in (select concat(sms_box_seq,'#',a_num,'#',target_time) from msgweb.sms_send_msg) "	;
+			sql3 += " and DATE_FORMAT(now(),'%Y/%m/%d') >= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',1) ";
+			sql3 += " and DATE_FORMAT(now(),'%Y/%m/%d') <= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',-1) ";
+			sql3 += " and INSTR( trim(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, ';monthdays-', -1),';',1)), trim(LPAD(DAYOFMONTH(now()), 2, '0')))  > 0  ";
+
+						
+			 
+
+			int loop_count=0;
+			int total_count=0;
+			
+			int whileloop =0;
+			
+			while (whileloop < 3 ) {
+				
+                whileloop++;
+				
+				logger.info("whileloop=" +whileloop);
+			    if(whileloop ==1){
+			    sql = sql1;
+			    selectoption =selectoption1;
+			    }
+				
+				if(whileloop ==2){
+			    sql = sql2;
+			    selectoption =selectoption2;
+			    }
+				
+				if(whileloop ==3){
+			    sql = sql3;
+			    selectoption =selectoption3;
+			    }
+				
+				
+			
+			    logger.info("sql=" +sql);
+			
+				Thread.sleep(1000);
+				loop_count++;
+				total_count++;
+				rs = stmt.executeQuery(sql);
+				int rec_count = 0;
+			    //t_finish = 0;
+				
+				/*
+				if(loop_count > queryTimesLog) {
+					logger.info("Runnging Query DB "+ queryTimesLog+ " times");
+					loop_count =0;
+				}
+				
+				
+				if(total_count > rebindSmscTime) {
+					
+					stmt.close();
+					rs.close();
+					conn.close();
+					
+					logger.info("Close database...");
+					
+					break;
+				}
+					*/
+				while (rs.next()) {
+
+									
+
+					// Thread.sleep(2);
+					rec_count++;
+
+					
+					
+					String t_time = rs.getString("t_time");
+					String s_id = rs.getString("s_id");
+					String sender = rs.getString("sender");
+					String msisdn_lst = rs.getString("msisdn_lst");
+					String msg_content = rs.getString("msg_content");
+
+					logger.info("DB Recod Count =" + Integer.toString(rec_count));
+					logger.info("t_time=" + t_time + "#s_id=" + s_id + "#sender=" + sender+ "#msisdn_lst=" + msisdn_lst + "#msg_content=" + msg_content+"#");
+
+				     
+ 
+       
+					for (String retval: msisdn_lst.split(",")){
+						logger.info("t_time=" + t_time + "#s_id=" + s_id + "#sender=" + sender+  "#msisdn=" + retval + "#msg_content=" + msg_content+"#");
+						String INSSQL = "INSERT INTO msgweb.sms_send_msg(sms_box_seq,a_num,b_num,msg,sms_type,status,target_time) VALUES('"+s_id+"','"+sender+"','"+retval+"','"+msg_content+"','"+selectoption+"','O',concat(DATE_FORMAT(now(),'%Y-%m-%d'),' ','"+t_time+"'))"   ;    
+                        logger.info(INSSQL);
+						p_stmt.executeUpdate(INSSQL);
+					}
+				
+				
+
+					Date f_Date = new Date();
+					DateFormat f_DateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+					String f_time = f_DateFormat.format(f_Date);
+
+					logger.info("f_time =" + f_time);
+					
+					// rs.updateString("status", "C");
+					// rs.updateString("finish_time", f_time);
+					// rs.updateString("ret_msg", ret_msg.substring(0) );
+					// rs.updateRow();
+					// logger.info("ret_msg = " +ret_msg );
+
+				}
+
+				
+					
+
+				
+			}
+			
+			logger.info("Close Connecting database...");
+			
+			stmt.close();
+			rs.close();
+			p_stmt.close();
+			conn.close();
+			
+			
+			
+					logger.info("end line ----------------------------------");
+
+		} catch (Exception e) {
+			// conn.close();
+			logger.error("Got an exception! " + e);
+			logger.info(e.getMessage());
+			e.printStackTrace();
+
+		}
+
+	}
+
+	private static void getConfig() {
+
+		String Config_f = "config.properties";
+
+		byte ton;
+		byte npi;
+		String addr;
+
+		String bindMode;
+		int rcvTimeout;
+		String syncMode;
+
+		try {
+
+			logger.info("Load Config ......");
+			properties.load(new FileInputStream(Config_f));
+			DB_URL = properties.getProperty("MySqlUrl");
+			USER = properties.getProperty("username");
+			PASS = properties.getProperty("password");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

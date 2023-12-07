@@ -1,0 +1,132 @@
+{
+  "basePath": "/",
+  "definitions": {
+    "Product": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "format": "double",
+          "type": "number"
+        },
+        "quantity": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "title": "Product",
+      "type": "object"
+    }
+  },
+
+  "info": {
+    "contact": {
+      "name": "亞太電信-資訊中心-加值服務系統部-系統架構暨工程組"
+    },
+    "description": "台肥專案",
+    "termsOfService": "相关url",
+    "title": "亞太電信Gt-Ething Open Data 平台",
+    "version": "版本：1.0"
+  },
+  "paths": {
+    "/waterfish/api/product": {
+      "get": {
+        "deprecated": false,
+        "description": "裝置列表api",
+        "operationId": "getAllproductUsingGET",
+        "produces": ["application/json;charset=UTF-8"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Product"
+              },
+              "type": "array"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "summary": "所有裝置列表",
+        "tags": ["台肥API測試"]
+      }
+    },
+    "/waterfish/api/product/{deviceid}/senson/{sensorid}/rawdata?start={start}&end={end}": {
+      "get": {
+        "deprecated": false,
+        "description": "裝置資訊api",
+        "operationId": "getProductUsingGET",
+        "parameters": [{
+          "description": "deviceid",
+          "format": "int32",
+          "in": "path",
+          "name": "deviceid",
+          "required": true,
+          "type": "integer"
+        }, {
+          "description": "sensorid",
+          "format": "int32",
+          "in": "path",
+          "name": "sensorid",
+          "required": true,
+          "type": "integer"
+        }, {
+          "description": "起始時間20190101",
+          "in": "query",
+          "name": "start",
+          "required": true,
+          "type": "string"
+        },{
+          "description": "到期時間20190501",
+          "in": "query",
+          "name": "end",
+          "required": true,
+          "type": "string"
+        }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "summary": "取得裝置資訊",
+        "tags": ["台肥API測試"]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "tags": [{
+    "description": "查詢裝置相關操作",
+    "name": "台肥API測試"
+  }
+  ]
+}

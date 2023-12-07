@@ -1,0 +1,46 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="modal fade" id="EUIconfigModal" tabindex="-1" role="dialog" aria-labelledby="EUIconfigLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content ">
+			<div class="modal-header bg-success">
+				<h5 class="modal-title  w-100 text-center text-white" id="EUIconfigModalLabel">節能績效指標節能設定</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+
+				<form>
+
+					<div class="form-group">
+						<label for="viewsellabel">EUI(請輸入樓地板面積)</label> 
+						<div class="form-group row">
+						<div class="col-sm-8">
+						<input type="text" class="form-control" id="manspace" >
+						</div>
+						<label for="meter2">平方公尺</label>
+						</div>
+						<label for="viewsellabel">人均用電(請輸入員工人數)</label>
+						<div class="form-group row">
+	
+						<div class="col-sm-8">
+						<input type="text" class="form-control" id="mancount" >
+						</div>
+						<label for="meter2">人</label>
+						</div>	
+						</select>
+					</div>
+					
+                   <button type="button" class="btn btn-success"  onclick="SetCompanyCoefficient()">確認</button>
+
+				</form>
+
+
+
+			</div>
+			
+		</div>
+	</div>
+</div>

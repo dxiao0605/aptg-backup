@@ -1,0 +1,80 @@
+{
+	"id": "root",
+	"name": "root",
+	"description": "First Parent Node",
+	"children": [
+	 {
+			"id": "m1",
+            "name": "c1",
+            "hrefid": "main3.html",
+			"description": "首頁",
+			"children": []
+		},
+	
+	{
+			"id": "c1",
+            "name": "c1",
+            "hrefid": "energy",
+			"description": "耗能總覽",
+			"children": [{
+					"id": "c21",
+                    "name": "c21",
+                    "hrefid": "mlight.html",
+					"description": "照明耗能",
+					"children": []
+				}, {
+					"id": "c22",
+                    "name": "c22",
+                    "hrefid": "mair.html",
+					"description": "空調耗能",
+					"children": []
+				}]
+		}, {
+			"id": "c2",
+            "name": "c2",
+            "hrefid": "schedule",
+			"description": "照明排程設定",
+			"children": [{
+					"id": "c21",
+                    "name": "c21",
+                    "hrefid": "msch.html",
+					"description": "排程設定",
+					"children": []
+				}, {
+					"id": "c22",
+                    "name": "c22",
+                    "hrefid": "mschconfig.html",
+					"description": "排程管理",
+					"children": []
+				}
+			]
+		}, {
+			"id": "c4",
+            "name": "c4",
+            "hrefid": "epredict.html",
+			"description": "需量契約圖表",
+			"children": []
+		}, {
+			"id": "c5",
+            "name": "c5",
+            "hrefid": "deviceconfig",
+			"description": "設備管理",
+			"children": [{
+					"id": "c51",
+                    "name": "c53",
+                    "hrefid": "mlightmger.html",
+					"description": "照明管理",
+					"children": []
+				},  {
+					"id": "c53",
+                    "name": "c53",
+                    "hrefid": "#",
+					"description": "空調管理",
+					"children": []
+				}
+
+			]
+		}
+
+	]
+}

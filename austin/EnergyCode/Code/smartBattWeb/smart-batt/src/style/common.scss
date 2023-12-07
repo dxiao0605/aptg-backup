@@ -1,0 +1,290 @@
+@charset "UTF-8";
+%active {
+    color: #007bff;
+    border-bottom: 1px solid #007bff;
+    a{ color: #007bff; }
+}
+
+
+
+
+//
+.text{
+    &-primary { //主色
+        color: $mainColor;
+    }
+    &-green {   //正常
+        color:rgba(32,140,38,1);
+    }
+    &-yellow {  //警戒
+        color:rgba(255,190,23,1);
+    }
+    &-blue {    //離線
+        color: rgba(47,197,185,1);
+    }
+    &-red {     //需更換
+        color: rgba(221,40,73,1);
+    }
+    &-orange {  //溫度告警值
+        color: #ff5722;
+    }
+    &-gray {
+        color: #b9b9b9;
+    }
+}
+
+
+
+
+
+// input
+input:focus{
+    border: 2px solid $mainColor;
+    outline: 0;
+    box-shadow: 0px 0px 4px $mainColor;
+    border-radius: 4px;
+}
+input + .inputTipText{
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    color: #6d6d6d !important;
+}
+
+
+
+
+// button
+button:focus {
+    outline: none;
+}
+// bootstrap custome
+.btn{
+    &-outline-primary {
+        color: #525b6c;
+        border-color: #525b6c;
+        outline: none;
+        box-shadow: none;
+        &:hover {
+            background: #525b6c;
+            color: #ffffff;
+            border-color: #525b6c;
+        }
+        &:active{
+            background: #525b6c !important;
+            color: #ffffff;
+            border-color: #525b6c !important;
+        }
+        &:focus{
+            background: #525b6c;
+            color: #ffffff;
+            border-color: #525b6c;
+        }
+    }
+    &-main {    // 主色
+        color: #ffffff;
+        background: $mainColor;
+    }
+    &_dialog-main{
+        color: #ffffff;
+        background:$mainColor;
+        padding: 6px 16px;
+        font-size: 0.875rem;
+        min-width: 64px;
+        box-sizing: border-box;
+        transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        font-family: 微軟正黑體,Microsoft JhengHei,Open Sans,"Helvetica Neue",Arial,sans-serif;
+        font-weight: 500;
+        line-height: 1.75;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+}
+
+// 圖示按鈕
+.btn_icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    border-radius: 100%;
+    cursor: pointer;
+    &:hover{
+        background: rgba(230,230,230,0.6);
+    }
+}
+// 使用者資訊(操作)
+.user_configInfo{
+    &--btn {
+        padding: 0.25rem 0.5rem;
+        width: auto;
+        max-width: 200px;
+        line-height: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+    }
+    // 使用者資訊(系統版本)
+    &--versionText {
+        position:absolute;
+        width:100%;
+        height: 3.5rem;
+        bottom:0;
+        padding:0.5rem 0;
+        background:#f5f5f5;
+        color:#6d6d6d;
+        cursor:default;
+    }
+}
+
+
+
+
+
+
+
+// Title
+.page {
+    &_headerTab{    // 告警頁面抬頭頁籤
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0;
+        width: 100%;
+        position: relative;
+        vertical-align: bottom;
+        border-bottom: 1px solid rgba(213,213,213,1);
+        @media screen and (min-width: 768px) {
+            display: inline-flex;
+            justify-content: space-between;
+        }
+        &-group {
+            display: inline-block;
+            vertical-align: text-bottom;
+            width: 50%;
+            margin: 0;
+            position: relative;
+            @media screen and (min-width: 460px) {
+                &.singleTitle {
+                    display: inline-flex !important;
+                    width: auto !important;
+                }
+            }
+            @media screen and (min-width: 568px) {
+                &:nth-child(1).extra{ width: 70%; }
+                &:nth-last-child(1).extra{ width: 30%; }
+                
+            }
+            @media screen and (min-width: 768px) {
+                display: inline-flex;
+                width: auto;
+            }
+            @media screen and (min-width: 1200px) {
+                &:nth-child(1) {
+                    display: inline-block;
+                    vertical-align: text-bottom;
+                    width: 75%;
+                }
+            }
+        }
+        &-title {    // 頁籤
+            display: inline-flex;
+            align-items: flex-end;     
+            margin: 0;
+            padding: 0 0.25rem;
+            margin-right: 0.25rem;
+            position: relative;
+            border-bottom: 1px solid rgba(82,91,108,1);
+            &.active {
+                @extend %active;
+            }
+            a{
+                display: inline-block;
+                margin: 0 0.25rem;
+                color: #333333;
+                text-decoration: none;
+            }
+            &:hover {
+                @extend %active;
+            }
+        }
+    }
+    // 右上語系調整與使用者設定選項
+    &_settingTool {
+        display: inline-flex;
+        vertical-align: middle;
+        border-left: 1px solid rgba(213,213,213,1);
+    }
+}
+
+// 電池歷史
+.batteryHistory-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 1rem 0;
+    width: 100%;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+.batteryHistory-card {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    text-align: center;
+}
+// 用戶設定
+.userConfig-margin {
+    margin: 0;
+    vertical-align: middle;
+    color: #6d6d6d;
+}
+// 匯入與分配(Import and Allocate)
+.InA-uploader {
+    display: inline-grid;
+    cursor: pointer;
+    overflow: hidden;
+    &-btn {
+        position: absolute;
+        top: 8px;
+        right: 0;
+        left: 0;
+        bottom: 0px;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        cursor: pointer;
+    }
+}
+// 公司設定
+.systemSetting-uploader {
+    width: 30px;
+    display: inline-grid;
+    cursor: pointer;
+    overflow: hidden;
+    &-btn {
+        position: absolute;
+        top: 4px;
+        right: 0;
+        left: 0;
+        bottom: 0px;
+        width: 100%;
+        margin: 0;
+        // height: calc(1.5em + 0.75rem + 2px);
+        text-align: center;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+
+
+
+// datepicker-full
+.react-datepicker-wrapper, 
+.react-datepicker__input-container { width: 100%; } 
+.react-datepicker-wrapper .react-datepicker__input-container input { width: 100% }
+
+
+

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- status=debug 可以查看log4j的装配过程 
+All < Trace < Debug < Info < Warn < Error < Fatal < OFF
+-->  
+<Configuration status="INFO" monitorInterval="1800">  
+  
+    <properties>  
+        <!-- <property name="LOG_HOME">/opt/poc_cubeco/logs/EcoTask</property> -->
+        <property name="LOG_HOME">/mntopt/cubeco/logs/EcoTask</property>
+        
+        <property name="FILE_NAME">ecotask</property>  
+    </properties>  
+      
+    <Loggers>
+        <Logger name="aptg.dao" level="info" additivity="false">
+			<appender-ref ref="db-log"/>
+        </Logger>
+        
+        <Logger name="aptg.EcoTask" level="info" additivity="false">
+			<appender-ref ref="EcoTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.TimeDailyTask" level="info" additivity="false">
+			<appender-ref ref="TimeDailyTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.PowerRecordCollectionTask" level="info" additivity="false">
+			<appender-ref ref="PowerRecordCollectionTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.FcstChargeTask" level="info" additivity="false">
+			<appender-ref ref="FcstChargeTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.KPITask" level="info" additivity="false">
+			<appender-ref ref="KPITask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.PowerMonthTask" level="info" additivity="false">
+			<appender-ref ref="PowerMonthTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.BestRatePlanTask" level="info" additivity="false">
+			<appender-ref ref="BestRatePlanTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.BestCCTask" level="info" additivity="false">
+			<appender-ref ref="BestCCTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.MaxDemandTask" level="info" additivity="false">
+			<appender-ref ref="MaxDemandTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.CheckPowerAccountTask" level="info" additivity="false">
+			<appender-ref ref="CheckPowerAccountTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.S25Task" level="info" additivity="false">
+			<appender-ref ref="S25Task"/>
+        </Logger>
+        
+    	<Logger name="aptg.function.FuncID_S_IllegalValue" level="info" additivity="false">
+    		<appender-ref ref="illegalValue-log" />
+    	</Logger>
+        
+    	<Logger name="aptg.monitor.Eco5OfflineMonitor" level="info" additivity="false">
+    		<appender-ref ref="Eco5OfflineMonitor" />
+    	</Logger>
+        
+        <Logger name="aptg.monitor.S25FailedMonitor" level="info" additivity="false">
+			<appender-ref ref="S25FailedMonitor"/>
+        </Logger>
+    	
+		<Root level="error" additivity="false">
+	    	<appender-ref ref="Console"/>
+		</Root>
+    </Loggers>
+    
+    
+    <Appenders>  
+        <!-- 定义控制台输出 -->  
+        <Console name="Console" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t %c] %-5level %logger{36} - %msg%n" />  
+        </Console>
+		
+		
+		<!-- db exception -->
+		<RollingRandomAccessFile name="db-log"
+			fileName="${LOG_HOME}/${FILE_NAME}_db.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/db/${FILE_NAME}_db-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/db/${FILE_NAME}_db*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+  
+		<RollingFile name="EcoTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_info.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/info/${FILE_NAME}_info-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<!-- 每天生成一个日志文件 -->
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <!-- 每到10M生成一个日志文件 -->  
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/info/${FILE_NAME}_info*.log" />
+					<!--刪除90天前的文件 -->
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="TimeDailyTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_TimeDailyTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/TimeDailyTask/${FILE_NAME}_TimeDailyTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/TimeDailyTask/${FILE_NAME}_TimeDailyTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="PowerRecordCollectionTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_PowerRecordCollectionTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/PowerRecordCollectionTask/${FILE_NAME}_PowerRecordCollectionTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/PowerRecordCollectionTask/${FILE_NAME}_PowerRecordCollectionTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="FcstChargeTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_FcstChargeTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/FcstChargeTask/${FILE_NAME}_FcstChargeTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/FcstChargeTask/${FILE_NAME}_FcstChargeTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="KPITask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_KPITask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/KPITask/${FILE_NAME}_KPITask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/KPITask/${FILE_NAME}_KPITask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="PowerMonthTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_PowerMonthTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/PowerMonthTask/${FILE_NAME}_PowerMonthTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/PowerMonthTask/${FILE_NAME}_PowerMonthTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="BestRatePlanTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_BestRatePlanTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/BestRatePlanTask/${FILE_NAME}_BestRatePlanTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/BestRatePlanTask/${FILE_NAME}_BestRatePlanTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="BestCCTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_BestCCTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/BestCCTask/${FILE_NAME}_BestCCTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/BestCCTask/${FILE_NAME}_BestCCTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="MaxDemandTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_MaxDemandTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/MaxDemandTask/${FILE_NAME}_MaxDemandTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/MaxDemandTask/${FILE_NAME}_MaxDemandTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="CheckPowerAccountTask" 
+			fileName="${LOG_HOME}/${FILE_NAME}_CheckPowerAccountTask.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/CheckPowerAccountTask/${FILE_NAME}_CheckPowerAccountTask-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/CheckPowerAccountTask/${FILE_NAME}_CheckPowerAccountTask*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="S25Task" 
+			fileName="${LOG_HOME}/${FILE_NAME}_S25Task.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/S25Task/${FILE_NAME}_S25Task-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/S25Task/${FILE_NAME}_S25Task*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="Eco5OfflineMonitor" 
+			fileName="${LOG_HOME}/${FILE_NAME}_Eco5OfflineMonitor.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/Eco5OfflineMonitor/${FILE_NAME}_Eco5OfflineMonitor-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/Eco5OfflineMonitor/${FILE_NAME}_Eco5OfflineMonitor*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<RollingFile name="S25FailedMonitor" 
+			fileName="${LOG_HOME}/${FILE_NAME}_S25FailedMonitor.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/S25FailedMonitor/${FILE_NAME}_S25FailedMonitor-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/S25FailedMonitor/${FILE_NAME}_S25FailedMonitor*.log" />
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>  
+		</RollingFile>
+		
+		<!-- record mode1~4, DemandPK~OP -->
+		<RollingFile name="illegalValue-log" 
+			fileName="${LOG_HOME}/${FILE_NAME}_illegalValue.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/illegalValue/${FILE_NAME}_illegalValue-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss.SSS} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<!-- 每天生成一个日志文件 -->
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <!-- 每到10M生成一个日志文件 -->  
+                <SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/illegalValue/${FILE_NAME}_illegalValue*.log" />
+					<!--刪除90天前的文件 -->
+					<IfLastModified age="60d" />
+				</delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+    </Appenders>  
+    
+</Configuration>  

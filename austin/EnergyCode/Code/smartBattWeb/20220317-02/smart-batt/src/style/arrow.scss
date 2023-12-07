@@ -1,0 +1,87 @@
+@charset 'UTF-8';
+$backgroundColor: #03c3ff;
+$backgroundColorHover: #2196f3;
+.arrow {
+    display: inline-block;
+    height: 40px;
+    width: 70px;
+    background-color: $backgroundColor;
+    position: relative;
+    transform: rotate(90deg);
+    transition: transform 0.3s;
+    @media screen and(min-width: 1200px) {
+        transform: rotate(0deg);
+        transition: transform 0.3s;
+    }
+}
+
+.arrow::after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 52px solid transparent;
+    border-left: 52px solid #03c3ff;
+    left: 57px;
+    top: -30px;
+}
+.arrow.active,
+.arrow:hover {
+    background-color: $backgroundColorHover;
+}
+.arrow.active:after,
+.arrow:hover:after {
+    border-left: 52px solid $backgroundColorHover;
+}
+
+.arrowFloor {
+    flex-flow: row wrap;
+    min-height: 25vh;
+    @media screen and(min-width: 1200px) {
+        flex-flow: column-reverse;
+    }
+    &__oneFloor {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        z-index: 20;
+    }
+    &__twoFloor {
+        display: flex;
+        justify-content: center;
+        z-index: 1;
+        position: absolute;
+    }
+}
+
+.arrowCheckbox {
+    display: flex;
+    align-items: center;
+    width: auto;
+}
+
+.arrowBoxShadow {
+    box-shadow: inset 0 0 3px 3px #ccc;
+}
+.border_ccc {
+    border: 1px solid #ccc;
+}
+
+//滾輪樣式
+/*-------滾動條整體樣式----*/
+.scrollStyle::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+/*滾動條裡面小方塊樣式*/
+.scrollStyle::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #6c757d
+}
+/*滾動條裡面軌道樣式*/
+.scrollStyle::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(200, 200, 200, 0.1);
+}

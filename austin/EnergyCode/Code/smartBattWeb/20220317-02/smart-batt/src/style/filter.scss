@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+.filter {
+    padding: 1rem;
+    position: relative;
+    list-style: none;
+    overflow: hidden;
+    overflow-y: auto;
+    li {
+        padding: 0;
+        list-style: none;
+        padding-top: 0.5rem;
+        .filterItem {
+            vertical-align: middle;
+            margin-bottom: 0.3rem;
+        }
+        & > ul {
+            margin: 0;
+            padding: 0rem 1em;
+            background: aliceblue;
+            & > li {
+                padding: 0.35rem 0;
+                border-bottom: 1px dashed #dddddd;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+    &.Windows {
+        height: auto;
+        // overflow-y: scroll;
+    }
+    &.Mac {
+        height: auto;
+    }
+    &.mh-10{
+        max-height: 10%;
+    }
+    &.h-70{
+        min-height: 450px;
+        height: 70%;
+    }
+    &_prompt {
+        //己選擇幾項
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        background: rgb(221, 221, 221);
+        color: rgb(51, 51, 51);
+        text-align: center;
+        line-height: 20px;
+        vertical-align: baseline;
+        border-radius: 100%;
+        cursor: pointer;
+        &.noDetail{
+            cursor: default;
+            &:before {
+                display: none;
+                width:0;
+                height:0;
+                padding: 0 !important;
+                border: 0px !important;
+            }
+        }
+        // 靠左對齊
+        &:hover {
+            &:before {
+                content: attr(data-list);
+                display: block;
+                position: absolute;
+                overflow: hidden;
+                overflow-y: auto;
+                top: 20px;
+                left:-45px;
+                right:0;
+                padding: 0.5rem;
+                min-width: 165px;
+                max-width: 180px;
+                min-height: 0px;
+                max-height: 320px;
+                z-index: 101;
+                background: #fff;
+                border: 2px solid #efefef;
+                border-radius: 0.5rem;
+                word-break: break-all;
+                line-height: 1.85;
+                text-align: left;
+                white-space: break-spaces;
+                cursor: default;
+            }
+        }
+        
+    }
+    &_toggle--btn {
+        cursor: pointer;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
+// 顯示詳細清單
+.filter_prompt:hover + .filter_detailList{
+    display: block;
+}
+
+//FilterItemRadio 頁籤
+.dateRangeBookMark {
+    background-color: #fff;    
+}
+.dateRangeBookMarkli {
+    text-align: center;
+    background-color: rgba(180, 180, 180,0.7);    
+    border-bottom: 2px #fff solid;
+    box-shadow: 1px -1.5px 3px 0px;
+    cursor: pointer;
+}
+.dateRangeBookMarkli:hover{
+    background-color: rgb(239, 242, 247);
+}
+.dateRangeBookMarkli.active{
+    background-color: rgb(239, 242, 247);
+}
+
+//FilterItemRadio return 日曆、啟、訖 body
+.dateRangeTime {
+    background: #fff;
+    display: inline-flex;
+    flex-direction: column;
+}
+.dateRangeTimeHeader {
+    background-color: rgb(239, 242, 247);
+    padding: 0.833em;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    &_Div {
+        border-radius: 4px;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid transparent;
+        position: relative;
+        text-align: center;
+        color: inherit;
+        width: 12.15em;
+    }
+    &_Label {
+        height: 2.5em;
+        line-height: 2.5em;
+        border: 0px;
+        background: transparent;
+        width: 100%;
+        text-align: inherit;
+    }
+}
+
+.dateRangeTimeContext {
+    padding-top: 22px;
+    max-height: 291.98px;
+    overflow: hidden;
+    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    &_HDiv {
+        cursor: pointer;
+        position: relative;
+        width: 33.333%;
+        text-align: center;
+        padding: 2px 0;
+        justify-content: center;
+        display: flex;
+    }
+    &_HItem {
+        font-weight: 300;
+        font-size: 12px;
+        background: #fff;
+        border-radius: 1.042em;
+        right: 2px;
+        left: 2px;
+        width: 80%;
+        height: 2.25em;
+        line-height: 2.25em;
+    }
+    &_MDiv {
+        cursor: pointer;
+        position: relative;
+        width: 100%;
+        text-align: center;
+        padding: 2px 0;
+        justify-content: center;
+        display: flex;
+    }
+    &_MItem {
+        font-weight: 300;
+        font-size: 12px;
+        background: #fff;
+        border-radius: 1.042em;
+        right: 2px;
+        left: 2px;
+        width: 40%;
+        height: 2.25em;
+        line-height: 2.25em;
+    }
+    &_Hover {
+        border: 1px solid #3d91ff;
+    }
+    &_Active {
+        background: #3d91ff;
+        color: #fff;
+        border: 0;
+    }
+}

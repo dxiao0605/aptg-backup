@@ -1,0 +1,40 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="modal fade" id="AccModal" tabindex="-1" role="dialog"
+		aria-labelledby="AccModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-success">
+					<h5 class="modal-title  w-100 text-center text-white" id="showtblModalLabel">新增帳號</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+					    <span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+
+				<form>
+					<div class="form-group">
+						<label for="Account-Input">帳號</label> <input type="text" class="form-control" id="add_acc" placeholder="帳號">
+					</div>
+					<div class="form-group">
+						<label for="Passwd-Input">密碼</label> <input type="text" class="form-control" id="add_pass" placeholder="密碼">
+					</div>
+					
+					<div class="form-group">
+						<label for="Name-Input">名稱</label> <input type="text" class="form-control" id="add_name" placeholder="名稱">
+					</div>
+				</form>
+
+
+
+			</div>
+				<div class="modal-footer bg-success">
+				
+				    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ClickAddAccount()">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>

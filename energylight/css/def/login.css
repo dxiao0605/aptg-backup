@@ -1,0 +1,57 @@
+
+body {
+  background: GRAY;
+ /* background: linear-gradient(to right, #008000, #FFFFE0);*/
+}
+
+
+.card {
+  border: 0;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  /* margin-bottom: 2rem; */
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.bg-login-image {
+  background: url("jpg/login.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+
+#login_btn {
+  font-size: 80%;
+  
+  letter-spacing: .5rem;
+  font-weight: bold;
+  transition: all 0.2s;
+ 
+  font-size:.8rem;
+  border-radius:10rem;
+  padding:.75rem 1rem;
+  
+}
+
+
+
+.login-input {
+  height: auto;
+  border-radius: 2rem;
+  font-weight: 200;
+  font-size: 1.2rem;
+}
+
+
+
+select {
+  text-align: center;
+  text-align-last: center;
+}
+option {
+   text-align: center;
+  text-align-last: center;
+}

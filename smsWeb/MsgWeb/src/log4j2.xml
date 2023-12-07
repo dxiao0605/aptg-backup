@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Automatic Reconfiguration 30 sec -->
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		 <!-- <Property name="log-path">${sys:catalina.home}/logs/MsgWeb</Property>  -->
+		<Property name="log-path">/usr/local/Tomcat/logs/MsgWeb</Property> 
+		
+<!-- 		<Property name="log-path">D:\xampp\apache-tomcat-8.5.28\logs\MsgWeb</Property> -->
+	</Properties>
+
+	<Appenders>
+		<Console name="STDOUT" >
+		    <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%-5level]  %logger{36},%L - %msg%n" />
+		</Console>
+
+		 <SMTP name="Mail" subject="[MsgWeb] An internal error has occured." 
+		      to="davidxiao@aptg.com.tw" from="no-relpy@aptg.com.tw" smtpHost="10.31.128.6" smtpPort="25" bufferSize="512">
+		</SMTP> 
+		 
+		
+		
+		
+		<RollingFile name="MsgWeb-log" fileName="${log-path}/MsgWeb.log"
+			filePattern="${log-path}/MsgWeb-%d{yyyy-MM-dd}.log">
+
+			<PatternLayout>
+			    <Charset>UTF-8</Charset>
+				<pattern> %d{yyyy/MM/dd HH:mm:ss.SSS} [%-5level] %t %c{1} ---%msg%n%throwable</pattern>
+			</PatternLayout>
+
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+
+		
+
+		<Async name="MsgWeb-Async">
+			<AppenderRef ref="MsgWeb-log" />
+		</Async>
+
+	</Appenders>
+
+	<Loggers>
+	
+	 <Root level="trace" >
+			<AppenderRef ref="STDOUT" level="trace"/>
+			<AppenderRef ref="Mail" level="error"/>
+		</Root> 
+		
+		<Logger name="tw.com.aptg" level="trace" additivity="true">
+			<appender-ref ref="MsgWeb-Async" />    
+		</Logger>	
+		
+		
+	</Loggers>
+</Configuration>

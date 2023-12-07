@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+
+	<properties>
+		<property name="LOG_HOME">./logs/</property>
+		<property name="FILE_NAME">routineSMS</property>
+	</properties>
+
+	<Appenders>
+		<!-- \u5B9A\u4E49\u63A7\u5236\u53F0\u8F93\u51FA -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t %L] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<SMTP name="Mail" subject="MSGWeb routineSMS Error Log" to="davidxiao@aptg.com.tw"
+			from="davidxiao@aptg.com.tw" smtpHost="10.31.7.153" smtpPort="25"
+			bufferSize="50">
+		</SMTP>
+
+		<RollingRandomAccessFile name="RollingRandomAccessFile"
+			fileName="${LOG_HOME}/${FILE_NAME}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%t][%X{PID}][%logger{36}] - %msg%n" />
+			<Policies>
+				<!-- \u6BCF\u5929\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- \u6BCF\u523010M\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<!-- \u6700\u5927\u4FDD\u5B58\u6587\u4EF6\u6570 -->
+			<DefaultRolloverStrategy max="500" />
+		</RollingRandomAccessFile>
+
+		
+
+		<Async name="routineSMS">
+			<AppenderRef ref="RollingRandomAccessFile" />
+		</Async>
+
+		
+
+	</Appenders>
+
+	<Loggers>
+		<Logger name="routineSMS" level="info" additivity="true">
+			<AppenderRef ref="routineSMS" />
+		</Logger>
+
+		
+		<Root level="error">
+			<AppenderRef ref="Console" />
+			<!-- <AppenderRef ref="Mail" /> -->
+		</Root>
+
+
+	</Loggers>
+
+</Configuration>

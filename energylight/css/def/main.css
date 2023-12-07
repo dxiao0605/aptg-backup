@@ -1,0 +1,190 @@
+
+/*
+.sidebar ul li .active {
+	 background - color:  # eee
+	background-color: green;
+}
+
+*/
+
+
+.total_line {
+  border: 3px solid green;
+}
+
+
+
+
+/*
+@media (min-width: 768px){
+.sidebar {
+    z-index: 1;
+    position: absolute;
+    width: 250px;
+    margin-top: 51px;
+}
+*/
+.device-select{
+    /* padding: 1px;
+    
+	 border: solid 1px #0077B0; 
+    
+	
+	outline: 1; 
+	
+	
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #C6ECFF), to(#FFFFFF)); 
+    background: -moz-linear-gradient(top, #FFFFFF, #C6ECFF 1px, #FFFFFF 25px); 
+	
+	box-shadow: rgba(0,0,0, 0.1) 0px 0px 4px; 
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 4px; 
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 4px
+	
+	
+	
+	background: -webkit-gradient(linear from(#FFFFFF), color-stop(4%, #C6ECFF), to(#FFFFFF));
+    
+	linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+	
+	
+	
+	 background: -webkit-gradient(linear, left top, left 25, from(#f69d3c), color-stop(4%, #C6ECFF), to(#f69d3c)); 
+	*/
+}
+
+
+.total_line {
+  border: 3px solid LimeGreen;
+}
+
+
+.set_line {
+  border: 3px solid DeepSkyBlue;
+}
+
+.h4 {
+  color: red;
+}
+
+.Wnum {
+  color: red;
+}
+ .scroll {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+	border: 1px solid green;
+}
+
+h1 {
+  position: absolute;
+  top: 35%;
+  width: 100%;
+
+  text-shadow:     0 1px 0 hsl(174,5%,80%),
+	                 0 2px 0 hsl(174,5%,75%),
+	                 0 3px 0 hsl(174,5%,70%),
+	                 0 4px 0 hsl(174,5%,66%),
+	                 0 5px 0 hsl(174,5%,64%),
+	                 0 6px 0 hsl(174,5%,62%),
+	                 0 7px 0 hsl(174,5%,61%),
+	                 0 8px 0 hsl(174,5%,60%),
+	
+	                 0 0 5px rgba(0,0,0,.05),
+	                0 1px 3px rgba(0,0,0,.2),
+	                0 3px 5px rgba(0,0,0,.2),
+	               0 5px 10px rgba(0,0,0,.2),
+	              0 10px 10px rgba(0,0,0,.2),
+	              0 20px 20px rgba(0,0,0,.3);
+}
+
+
+#sbri .slider-selection {
+	background: #F3CC0A;
+}
+#sbri .slider-handle {
+	background: green;
+}
+
+
+#sbri .slider-rangeHighlight {
+	background: #f70616;
+}
+
+#sbri .slider-rangeHighlight.category1 {
+    background: #FF9900;
+}
+
+
+#scct .slider-selection {
+	background: #1B35B3;
+}
+#scct .slider-handle {
+	background: green;
+}
+
+.slider.slider-horizontal{
+  width:400px; 
+}
+
+
+
+
+
+
+
+
+
+
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
+.breadcrumb {
+    padding: 0px 15px !important;
+}
+
+
+
+
+
+
+.round.hollow {
+    height: 40px;
+    width: 40px;
+    line-height: 30px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background-color: OldLace;    
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 0px 3px green;
+    margin-left: 10px;
+}
+
+.modal-content.modal-800 {
+    width: 600px;
+    height: 600px;
+    margin: 30px auto;
+}
+
+.device-link {
+  color: blue;
+  cursor:pointer
+}
+
+.online {
+  color: green;
+}
+
+.offline {
+  color: red;
+}

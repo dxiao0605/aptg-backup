@@ -1,0 +1,38 @@
+#accounts select{  
+   width: 100px;  
+   height:100px;  
+  }  
+  
+  
+ .nav-tabs .nav-link.active {
+  background: moccasin;
+  border-bottom: 2px solid green;
+}
+
+.nav-tabs .nav-link {
+  border-bottom: 2px solid grey;
+  padding-left: 3px;
+  color : black;
+}
+
+
+table{
+border-collapse: separate !important;
+}
+
+
+.myNodeClass {
+    text-align: center;
+    vertical-align: middle;
+    font-family: arial,helvetica;
+    cursor: default;
+    border: 2px solid #b5d9ea;
+	width : 200px;
+	height : 50px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
+    background-color: #856404;
+    background: -webkit-gradient(linear, left top, left bottom, from(#b0d7ff), to(#b0d7ee));
+}

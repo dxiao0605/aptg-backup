@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- status=debug 可以查看log4j的装配过程 
+All < Trace < Debug < Info < Warn < Error < Fatal < OFF
+-->  
+<Configuration status="WARN" monitorInterval="1800">  
+  
+    <properties>  
+        <property name="LOG_HOME">${sys:catalina.home}/logs/pocwaterthings</property>  
+        <property name="API_FILE_NAME">pocwaterthings</property>  
+         
+    </properties>  
+  
+    <Appenders>  
+        <!-- 定义控制台输出 -->  
+        <Console name="Console" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+        </Console>  
+        
+        <SMTP name="Mail" subject="GateWay Error Log" to="davidxiao@aptg.com.tw" from="davidxiao@aptg.com.tw"
+          smtpHost="10.31.7.153" smtpPort="25" bufferSize="50">
+        </SMTP>
+  
+        <RollingRandomAccessFile name="ApiLogFile"  
+            fileName="${LOG_HOME}/${API_FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${API_FILE_NAME}-%d{yyyy-MM-dd}-%i.log">  
+            <PatternLayout  
+                pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%X{PID}][%logger{36}] - %msg%n" />  
+            <Policies>  
+                <!-- 每天生成一个日志文件 -->  
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>  
+                <!-- 每到10M生成一个日志文件 -->  
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+            </Policies>  
+            <!-- 最大保存文件数 -->  
+            <DefaultRolloverStrategy max="500" />  
+        </RollingRandomAccessFile>  
+        
+      <Async name="apiLog">
+            <AppenderRef ref="ApiLogFile"/>
+        </Async>
+       
+       
+  
+    </Appenders>  
+      
+    <Loggers>  
+        <Logger name="tw.aptg.gteting.pocwater" level="info"  additivity="true">  
+            <AppenderRef ref="apiLog" />  
+        </Logger>  
+        
+        <Root level="debug">  
+            <AppenderRef ref="Console" />  
+            <!-- <AppenderRef ref="Mail" /> --> 
+        </Root>  
+    </Loggers>  
+</Configuration>  

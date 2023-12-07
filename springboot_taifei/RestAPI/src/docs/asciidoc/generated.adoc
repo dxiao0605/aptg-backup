@@ -1,0 +1,147 @@
+= äºå¤ªé»ä¿¡Gt-Ething Open Data å¹³å°
+
+
+[[_overview]]
+== Overview
+å°è¥å°æ¡
+
+
+=== Version information
+[%hardbreaks]
+__Version__ : çæ¬ï¼1.0
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : äºå¤ªé»ä¿¡-è³è¨ä¸­å¿-å å¼æåç³»çµ±é¨-ç³»çµ±æ¶æ§æ¨å·¥ç¨çµ
+
+
+=== License information
+[%hardbreaks]
+__Terms of service__ : ç¸å³url
+
+
+=== URI scheme
+[%hardbreaks]
+__BasePath__ : /
+
+
+=== Tags
+
+* å°è¥APIæ¸¬è©¦ : æ¥è©¢è£ç½®ç¸éæä½
+
+
+
+
+[[_paths]]
+== Paths
+
+[[_getallproductusingget]]
+=== ææè£ç½®åè¡¨
+....
+GET /waterfish/api/product
+....
+
+
+==== Description
+è£ç½®åè¡¨api
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_product,Product>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `application/json;charset=UTF-8`
+
+
+==== Tags
+
+* å°è¥APIæ¸¬è©¦
+
+
+[[_getproductusingget]]
+=== åå¾è£ç½®è³è¨
+....
+GET /waterfish/api/product/{deviceid}/senson/{sensorid}/rawdata?start={start}&end={end}
+....
+
+
+==== Description
+è£ç½®è³è¨api
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**deviceid** +
+__required__|deviceid|integer (int32)
+|**Path**|**sensorid** +
+__required__|sensorid|integer (int32)
+|**Query**|**end** +
+__required__|å°ææé20190501|string
+|**Query**|**start** +
+__required__|èµ·å§æé20190101|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|æå|<<_product,Product>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* å°è¥APIæ¸¬è©¦
+
+
+
+
+[[_definitions]]
+== Definitions
+
+[[_product]]
+=== Product
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**description** +
+__optional__|string
+|**id** +
+__optional__|integer (int32)
+|**name** +
+__optional__|string
+|**price** +
+__optional__|number (double)
+|**quantity** +
+__optional__|integer (int32)
+|===
+
+
+
+
+

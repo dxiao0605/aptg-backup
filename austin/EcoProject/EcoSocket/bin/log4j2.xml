@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- status=debug 可以查看log4j的装配过程 
+All < Trace < Debug < Info < Warn < Error < Fatal < OFF
+-->  
+<Configuration status="INFO" monitorInterval="1800">  
+  
+    <properties>  
+        <!-- <property name="LOG_HOME">/opt/poc_cubeco/logs/EcoSocket</property> -->
+        <!-- <property name="LOG_HOME">/opt/cubeco/logs/EcoSocket</property> -->
+        <property name="LOG_HOME">/mntopt/cubeco/logs/EcoSocket</property>
+        <property name="FILE_NAME">ecosocket</property>  
+    </properties>  
+      
+    <Loggers>
+        <Logger name="aptg.dao" level="info" additivity="false">
+			<appender-ref ref="db-log"/>
+        </Logger>
+        
+    	<Logger name="aptg.function.FuncID_S25" level="info" additivity="false">
+    		<appender-ref ref="S25-log" />
+    	</Logger>
+    	
+        <Logger name="aptg" level="info" additivity="false">
+			<appender-ref ref="info-log"/>
+        </Logger>
+		
+		<Root level="error" additivity="false">
+	    	<appender-ref ref="Console"/>
+		</Root>
+    </Loggers>
+    
+    
+    <Appenders>  
+        <!-- 定义控制台输出 -->  
+        <Console name="Console" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t %c] %-5level %logger{36} - %msg%n" />  
+        </Console>
+		
+		<!-- db exception -->
+		<RollingRandomAccessFile name="db-log"
+			fileName="${LOG_HOME}/${FILE_NAME}_db.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/db/${FILE_NAME}_db-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/db/${FILE_NAME}_db*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+	
+		<!-- record S25 -->
+		<RollingFile name="S25-log" 
+			fileName="${LOG_HOME}/S25.log" 
+			filePattern="${LOG_HOME}/S25/S25-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss.SSS} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="1 MB" />  
+			</Policies>
+			
+			<!-- 
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="2">
+					<IfFileName glob="*/${FILE_NAME}*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> -->
+		</RollingFile>
+			
+  
+		<RollingFile name="info-log" 
+			fileName="${LOG_HOME}/${FILE_NAME}_info.log" 
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}_info-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss.SSS} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<!-- 每天生成一个日志文件 -->
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <!-- 每到10M生成一个日志文件 -->  
+                <SizeBasedTriggeringPolicy size="10 MB" />  
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="2">
+					<IfFileName glob="*/S25*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+    </Appenders>  
+    
+</Configuration>  

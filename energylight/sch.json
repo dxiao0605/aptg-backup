@@ -1,0 +1,18 @@
+{
+  "Sch": [
+    {
+      "id": 11,
+      "name": "A區辦公室午休關燈",
+      "Location": "A區辦公室Itoch",
+      "SchSetting": "每天20191001-20191030 1330",
+      "Action": "午休"
+    },
+    {
+      "id": 22,
+      "name": "A區辦公室午休關燈",
+      "Location": "A區辦公室Itoch",
+      "SchSetting": "單次執行20191030 0830",
+      "Action": "會議"
+    }
+  ]
+}

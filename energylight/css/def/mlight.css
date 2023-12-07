@@ -1,0 +1,16 @@
+
+
+/* #tblData tbody tr.even:hover {
+       background-color: green;
+       cursor: pointer;
+   } */
+
+
+
+.modal-content.modal-800 {
+    width: 600px;
+    height: 600px;
+    margin: 30px auto;
+}
+
+

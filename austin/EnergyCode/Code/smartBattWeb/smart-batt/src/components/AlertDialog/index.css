@@ -1,0 +1,6 @@
+.MuiDialog-paper {
+    margin: 32px;
+    position: relative;
+    overflow: inherit !important;
+}
+

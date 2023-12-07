@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+$color: #525b6c;
+$hoverColor: #03c3ff;
+
+.toggleBtnBar {
+    margin: 0.5rem 0;
+    position: relative;
+    border: 1px solid #d5d5d5;
+    border-left: none;
+    border-right: none;
+    vertical-align: middle;
+    label{
+        margin: 0.25rem 0;
+    }
+    &_item {
+        display: inline-block;
+        margin: 0.25rem 0.25rem;
+        padding: 0 0.5rem;
+        font-size: 14px;
+        border: 1px solid $color;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+            background: $hoverColor;
+            color: #ffffff;
+            border: 1px solid $hoverColor;
+        }
+        &.fixed {
+            background: $color !important;
+            color: #ffffff !important;
+            cursor: default !important;
+        }
+        &.active {
+            background: $color;
+            color: #ffffff;
+        }
+    }
+}

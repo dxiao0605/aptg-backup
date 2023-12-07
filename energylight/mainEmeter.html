@@ -1,0 +1,127 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta name="generator" content="HTML Tidy for HTML5 for Windows version 5.6.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>亞太電信-能源平台</title>
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+
+<link rel="stylesheet" href="css/pub/bootstrap.min.css" />
+<link rel="stylesheet" href="css/pub/all.css" />
+<link href="css/pub/bootstrap-slider.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/pub/pretty-checkbox.min.css" />
+<link rel="stylesheet" href="css/pub/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="css/def/eW.css" />
+<link rel="stylesheet" href="css/def/common.css" />
+
+<script src="js/pub/jquery.min.js"></script>
+<script src="js/pub/bootstrap.min.js"></script>
+<script src="js/pub/bootstrap-slider.js"></script>
+<script src="js/pub/jquery.dataTables.min.js"></script>
+<script src="js/pub/canvasjs.min.js"></script>
+<script src="js/pub/jsonpath-0.8.0.js"></script>
+<script src="js/pub/loader.js"></script>
+<script src="js/def/common.js"></script>
+<script src="js/def/eW.js"></script>
+
+
+
+</head>
+<body>
+
+
+	<div class="container-fluid">
+
+
+		<div id="header"></div>
+
+
+		<div class="row mt-4">
+
+			<div class="col-2">
+				<div id="side-bar" class=""></div>
+			</div>
+
+			<div class="col-8">
+
+
+				<div class="row" id="ranks">
+
+					<div class="card-deck">
+						<div class="card border-dark" style="width: 18rem;">
+							<div class="card-body">
+								<h5 class="card-title">總耗能</h5>
+								<p class="total_line"></p>
+								<h5 class="card-data" id='showTotalW'></h5>
+							</div>
+						</div>
+						<div class="card border-dark" style="width: 18rem;">
+							<div class="card-body">
+								<h5 class="card-title">	EUI <span onclick="EUIconfig()"> <i class="fas fa-cog"></i>	</span>
+								</h5>
+								<p class="total_line"></p>
+								<h5 class="card-data" id='showEUI'></h5>
+							</div>
+						</div>
+						<div class="card border-dark" style="width: 18rem;">
+							<div class="card-body">
+								<h5 class="card-title">人均用電<span onclick="EUPIconfig()"> <i class="fas fa-cog"></i></span>
+								</h5>
+								<p class="total_line"></p>
+								<h5 class="card-data" id='showEUPI'></h5>
+							</div>
+						</div>
+						<div class="card border-dark" style="width: 18rem;">
+							<div class="card-body">
+								<h5 class="card-title">碳排放</h5>
+								<p class="total_line"></p>
+								<h5 class="card-data" id='showCO2'></h5>
+							</div>
+						</div>
+
+					</div>
+
+
+
+				</div>
+
+
+				<div class="row">
+
+					<div class="input-group mb-3">
+
+						<button type="button" class="btn btn-success btn-lg mt-4" onclick="addOverView()">單線圖設定</button>
+						<button type="button" class="btn btn-danger btn-lg mt-4 ml-4" onclick="ResetOverView()">單線圖重設</button>
+
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div id="chart_div" class="mt-5 ml-5 pl-5"></div>
+				</div>
+				
+				
+					<table class="display cell-border " id="statusTbl" style="width:100%" >
+				 
+				
+
+			</div>
+
+
+
+
+		</div>
+
+
+
+
+		<div id="footer"></div>
+	</div>
+
+    <div id="euiConfig"></div>
+	<div id="add-view"></div>
+	<div id="add-view-other"></div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JJ Energy</title>
+
+
+<link rel="stylesheet" href="/w123/bootstrap.min.css">
+<link rel="stylesheet" href="/w123/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/w123/ee.css">
+
+<script src="/w123/jquery.min.js"></script>
+<script src="/w123/bootstrap.min.js"></script>
+<script src="/w123/jquery.dataTables.min.js"></script>
+<script src="/w123/ee.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col offset-md-4">
+				<h1>蓄電池監視システム</h1>
+			</div>
+		</div>
+
+		<div class="col align-self-center">
+			<table id="energy" class="display" style="width: 100%">
+				
+			</table>
+
+		</div>
+	
+</div>
+	
+
+			<div class="modal fade" id="HistoryModal" tabindex="-1" role="dialog" aria-labelledby="HistoryModal" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header bg-success">
+							<h5 class="modal-title  w-100 text-center text-white" id="showtblModalLabel">歴史記録</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="tables">
+								<table id="showtbl" class="display" width="100%"></table>
+							</div>
+						</div>
+						<div class="modal-footer bg-success">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+
+	
+</body>
+</html>

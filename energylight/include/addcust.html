@@ -1,0 +1,64 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="modal fade" id="CustModal" tabindex="-1" role="dialog"
+		aria-labelledby="AccModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-success">
+					<h5 class="modal-title  w-100 text-center text-white" id="showtblModalLabel">新增會員</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+					    <span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+				<form>
+					<div class="form-group">
+						<label for="addcust_cust_name">會員名稱</label> <input type="text" class="form-control" id="addcust_cust_name" placeholder="會員名稱">
+					</div>
+					<div class="form-group">
+						<label for="addcust_contact_person">連絡人</label> <input type="text" class="form-control" id="addcust_contact_person" placeholder="連絡人">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_contact_num">連絡電話</label> <input type="text" class="form-control" id="addcust_contact_num" placeholder="連絡電話">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_address">地址</label> <input type="text" class="form-control" id="addcust_address" placeholder="地址">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_email">電子郵件</label> <input type="text" class="form-control" id="addcust_email" placeholder="電子郵件">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_type">類別</label> <input type="text" class="form-control" id="addcust_type" placeholder="類別">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_sales">銷售人員</label> <input type="text" class="form-control" id="addcust_sales" placeholder="銷售人員">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_sales_num">銷售人員電話</label> <input type="text" class="form-control" id="addcust_sales_num" placeholder="銷售人員電話">
+					</div>
+					
+					<div class="form-group">
+						<label for="addcust_sales_email">銷售人員電郵</label> <input type="text" class="form-control" id="addcust_sales_email" placeholder="銷售人員電郵">
+					</div>
+					
+				</form>
+
+
+
+			</div>
+				<div class="modal-footer bg-success">
+				
+				    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ClickAddCust()">確定</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>

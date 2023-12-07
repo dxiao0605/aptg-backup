@@ -1,0 +1,33 @@
+.btn-sm-b1 {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+    border-width: 1px;
+}
+
+.btn-outline-blue {
+    color: rgb(10, 118, 152);
+    // background-color: rgb(255, 255, 255);
+    border-color: rgb(10, 118, 152);
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-outline-blue:hover {
+    background-color: rgba(10, 118, 152, 0.8);
+    color: rgb(255, 255, 255);
+    border-color: rgb(10, 118, 152);
+}
+
+.overflowY_visible {
+    overflow-y: visible !important;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.SelectBorder0::before {
+    border-bottom: 0px !important;
+}

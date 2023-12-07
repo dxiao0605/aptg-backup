@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+.bookmark {
+    position: absolute;
+    top: 2.5em;
+    left: -4em; // top: 3.5em;left: 14.3em;
+    z-index: 99;
+    // padding: 1em 4em;
+    border-radius: 5px;
+    width: 12em; // width: 21em;height: 4em;
+    & .input-group-background {
+        background: #525b6c;
+        border-radius: 5px;
+        padding: 1px;
+    }
+}
+
+.filterSaveItem {
+    position: fixed;
+    right: 290px;
+    min-width: 12em;
+    border: 2px solid rgba(180, 180, 180, 0.9);
+    border-right: 0;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 2px 2px 2px #ccc;
+    min-height: 100px;
+    &_hide {
+        display: none;
+    }
+}
+
+.filterSaveFixed {
+    // position: fixed;
+    position: absolute;
+    right: 290px;
+    min-height: 100px;
+    z-index: 1;
+}
+
+.filterSaveFixed:before {
+    border-color: transparent transparent transparent #ccc;
+    border-style: solid solid solid;
+    border-width: 20px 20px 20px 20px;
+    top: 2em;
+    z-index: 9999;
+
+    /* 必須指定，才能顯示內容 */
+    content: "";
+
+    height: 0px;
+    right: -62px; // right: -40px;
+
+    /* 必須指定，否則會變梯形 */
+    position: absolute;
+    width: 0px;
+}
+
+.filterSaveFixed::after {
+    border-color: transparent transparent transparent rgba(255, 255, 255, 1);
+    border-style: solid solid solid solid;
+    border-width: 20px;
+    top: 2em;
+    z-index: 9999;
+
+    /* 必須指定，才能顯示內容 */
+    content: "";
+
+    height: 0px;
+    right: -60px; // right: -37px;
+
+    /* 必須指定，否則會變梯形 */
+    position: absolute;
+    width: 0px;
+}

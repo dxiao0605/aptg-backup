@@ -1,0 +1,114 @@
+@charset "UTF-8";
+// 點選顏色
+$foucsColor: #03c3ff;
+// 圖示
+%inputIcon {
+    position: absolute;
+    left: 20px; top: 35%;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    transform: translateY(-50%);
+    z-index: 1;
+    &.foucs{
+        color: $foucsColor;
+    }
+}
+
+
+
+.login{
+    margin: 1rem auto;
+    padding: 4rem 2rem;
+    min-width: 300px;
+    max-height: 500px;
+    background: rgba(56,61,66,1);
+    color: #ffffff;
+    border-radius: 4px;
+    &_content{
+        min-width: 300px;
+        max-height: 500px;
+        background: rgba(255,255,255,0.7);
+        // @media screen and (min-width: 768px) {
+        //     margin: 12% 0;
+        // }
+    }
+    &_container{
+        // background: #dfdfdf;
+        background: #dfdfdf url('../../image/login_window_background.jpg') no-repeat;
+        background-position: center center;
+        background-size: cover;
+        &.loading {
+            background: #dfdfdf url('../../image/login_window_background-s.jpg') no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+    }
+    label{
+        position: relative;
+        color: #d4d4d4;
+        &.account{
+            &::before {
+                
+                @extend %inputIcon;
+                content: "\f007";
+            }
+        }
+        &.password{
+            &::before {
+                @extend %inputIcon;
+                content: "\f023";
+            }
+        }
+        &.email{
+            &::before {
+                @extend %inputIcon;
+                content: "\f1fa";
+            }
+        }
+        
+        input{
+            position: relative;
+            width: 100%;
+            padding: 6px 8px 6px 48px !important;
+            margin-bottom: 1rem;
+            color: #333333;
+            border-radius: 4px;
+            &:focus {
+                color: #495057;
+                background-color: #fff;
+                border: 2px solid $foucsColor;
+                outline: 0;
+                box-shadow: 0 0 0 0.2rem $foucsColor;
+            }
+        }
+    }
+}
+
+// Login logo
+.logo-warp {
+    width:200px;
+    height: 100px;
+    background: url('../../image/login_window_logo.png') no-repeat;
+    background-position: center center;
+    background-size: contain;
+    &.loading {
+        background: url('../../image/login_window_logo-s.png') no-repeat;
+        background-position: center center;
+        background-size: contain;
+    }
+}
+
+
+// btn style
+.loginbtn {
+    &--changePage {
+        cursor: pointer;
+        font-size: 13px;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}

@@ -1,0 +1,144 @@
+@charset "UTF-8";
+@page {
+	size: A4 landscape; /*橫式*/ // size: A4 portrait; /*直式*/
+	// size: A4;
+	// size: landscape;
+	// margin: 0.5cm; /*print邊界*/
+	margin: 0;
+	// orphans: 4;
+	widows: 1;
+}
+
+.print-only {
+	display: none;
+}
+@media print {
+	// 其他通用設定
+	header,
+	nav,
+	footer,
+	video,
+	audio,
+	object,
+	embed {
+		display: none;
+		opacity: 0;
+	}
+	html,
+	body {
+		clear: both;
+		float: none;
+		max-width: 100%;
+		max-height: 100%;
+	}
+	img {
+		max-width: 100%;
+	}
+	a:link,
+	a:visited,
+	a {
+		width: 0;
+		height: 0;
+		display: none;
+	}
+	// 為了列印 PDF 的特殊設定:
+	// body{
+	//   -webkit-print-color-adjust: exact;
+	//   background-image: url('...') !important; /*如果背景圖沒顯示請加必殺技 !important*/
+	// }
+
+	// 首頁設定(印出 PieChart LineChart)，電池歷史(印出 Chart)
+	// .app.container-fuild{
+	// position: relative;
+	// min-height: 100vh;
+	// page-break-inside: avoid; /* 若順著向下排列時會切開此元素，則直接換頁 */
+	// page-break-after: always; /* 碰到此元素會直接換頁 */
+	// }
+
+	// 列印時,不顯示左側選單,和右側內容
+	.main_content > .page_header,		//上方內容
+	nav.mainNav,						//左側功能選單
+	.MuiList-root.MuiMenu-list {
+		display: none !important;
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+	.MuiPopover-root,.MuiDialog-root{
+		display: none !important;
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+	//取消main_content.open opatiy設定
+	.main_content.open {
+		clear: both;
+		display: block !important;
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		overflow: auto;
+	}
+	// 隱藏DIV
+	.print-hide {
+		width: 0 !important;
+		height: 0 !important;
+		display: none !important;
+		opacity: 0;
+	}
+	// 顯示DIV
+	.print-show {
+		width: 100% !important;
+		height: 100% !important;
+		display: inline-block;
+		// page-break-before: always;
+		background: #ffffff;
+		opacity: 1;
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+	// 僅列印時顯示
+	.print-only {
+		display: inline-block;
+		// page-break-before: always;
+		background: #ffffff;
+		opacity: 1;
+	}
+	//灰色遮罩
+	.pinnt-gray-mask.print {
+		// display: block;// z-index:  99;
+		background-color: white;
+		height: 100%;
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		margin: 0;
+		overflow: hidden;
+		page-break-after: always;
+	}
+
+	.card > .chart_content.height-200 {
+		max-height: auto !important;
+	}
+	canvas.chartjs-render-monitor {
+		min-height: 100%;
+		max-width: 100%;
+		height: auto !important;
+		width: auto !important;
+	}
+	
+}
+
+//灰色遮罩
+.pinnt-gray-mask {
+	// display: block;
+	// z-index:  99;
+	background-color: white;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: -120%;
+	left: -120%;
+	margin: 0;
+}

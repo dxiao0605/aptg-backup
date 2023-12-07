@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+
+	<properties>
+		<property name="LOG_HOME">./logs/</property>
+		<property name="FILE_NAME">smsSend</property>
+		<property name="FILE_NAME_DR">smsDR</property>
+		<property name="FILE_NAME_Query">smsQuerySm</property>
+	</properties>
+
+	<Appenders>
+		<!-- \u5B9A\u4E49\u63A7\u5236\u53F0\u8F93\u51FA -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t %L] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<SMTP name="Mail" subject="MSGWeb smsSend Error Log" to="davidxiao@aptg.com.tw"
+			from="davidxiao@aptg.com.tw" smtpHost="10.31.128.6" smtpPort="25"
+			bufferSize="50">
+		</SMTP>
+
+		<RollingRandomAccessFile name="RollingRandomAccessFile"
+			fileName="${LOG_HOME}/${FILE_NAME}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%t][%X{PID}][%logger{36}] - %msg%n" />
+			<Policies>
+				<!-- \u6BCF\u5929\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- \u6BCF\u523010M\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<!-- \u6700\u5927\u4FDD\u5B58\u6587\u4EF6\u6570 -->
+			<DefaultRolloverStrategy max="500" />
+		</RollingRandomAccessFile>
+		
+		
+		<RollingRandomAccessFile name="smsDRFile"
+			fileName="${LOG_HOME}/${FILE_NAME_DR}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME_DR}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%t][%X{PID}][%logger{36}] - %msg%n" />
+			<Policies>
+				<!-- \u6BCF\u5929\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- \u6BCF\u523010M\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<!-- \u6700\u5927\u4FDD\u5B58\u6587\u4EF6\u6570 -->
+			<DefaultRolloverStrategy max="500" />
+		</RollingRandomAccessFile>
+		
+		
+		<RollingRandomAccessFile name="smsQuerySmFile"
+			fileName="${LOG_HOME}/${FILE_NAME_Query}.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME_Query}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%t][%X{PID}][%logger{36}] - %msg%n" />
+			<Policies>
+				<!-- \u6BCF\u5929\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- \u6BCF\u523010M\u751F\u6210\u4E00\u4E2A\u65E5\u5FD7\u6587\u4EF6 -->
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<!-- \u6700\u5927\u4FDD\u5B58\u6587\u4EF6\u6570 -->
+			<DefaultRolloverStrategy max="500" />
+		</RollingRandomAccessFile>
+
+		<Routing name="Routing">
+            <Routes pattern="$${ctx:ROUTINGKEY}">
+                <!-- This route is chosen if ThreadContext has value 'special' for key ROUTINGKEY. -->
+                <Route key="special">
+                    <RollingFile name="Rolling-${ctx:ROUTINGKEY}" fileName="${LOG_HOME}/special-${ctx:ROUTINGKEY}.log"
+                                 filePattern="./logs/${date:yyyy-MM}/${ctx:ROUTINGKEY}-special-%d{yyyy-MM-dd}-%i.log">
+                        <PatternLayout>
+                            <Pattern>%d{ISO8601} [%t] %p %c{3} - %m%n</Pattern>
+                        </PatternLayout>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                            <SizeBasedTriggeringPolicy size="10 MB"/>
+                        </Policies>
+                    </RollingFile>
+                </Route>
+                <!-- This route is chosen if ThreadContext has no value for key ROUTINGKEY. -->
+                <Route key="$${ctx:ROUTINGKEY}">
+                    <RollingFile name="Rolling-default" fileName="${LOG_HOME}/default.log"
+                                 filePattern="./logs/${date:yyyy-MM}/default-%d{yyyy-MM-dd}-%i.log">
+                        <PatternLayout>
+                            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%t][%X{PID}][%logger{36}] - %msg%n</pattern>
+                        </PatternLayout>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                            <SizeBasedTriggeringPolicy size="10 MB"/>
+                        </Policies>
+                    </RollingFile>
+                </Route>
+                <!-- This route is chosen if ThreadContext has a value for ROUTINGKEY
+                     (other than the value 'special' which had its own route above).
+                     The value dynamically determines the name of the log file. -->
+                <Route>
+                    <RollingFile name="Rolling-${ctx:ROUTINGKEY}" fileName="${LOG_HOME}/other-${ctx:ROUTINGKEY}.log"
+                                 filePattern="./logs/${date:yyyy-MM}/${ctx:ROUTINGKEY}-other-%d{yyyy-MM-dd}-%i.log" append = "false">
+                        <PatternLayout>
+                            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%t][%X{PID}][%logger{36}] - %msg%n</pattern>
+                        </PatternLayout>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                            <SizeBasedTriggeringPolicy size="10 MB"/>
+                        </Policies>
+                    </RollingFile>
+                </Route>
+            </Routes>
+        </Routing>
+
+		<Async name="smssend">
+			<AppenderRef ref="RollingRandomAccessFile" />
+		</Async>
+
+		<Async name="smsDR">
+			<AppenderRef ref="smsDRFile" />
+		</Async>
+
+		
+		<Async name="smsQuerySm">
+			<AppenderRef ref="smsQuerySmFile" />
+		</Async>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="smsSend" level="info" additivity="true">
+			<AppenderRef ref="smssend" />
+		</Logger>
+        <Logger name="smsDR" level="info" additivity="true">
+			<AppenderRef ref="smsDR" />
+		</Logger>
+		<Logger name="smsQuerySm" level="info" additivity="true">
+			<AppenderRef ref="smsQuerySm" />
+		</Logger>
+		
+		<Root level="error">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Mail" /> 
+		</Root>
+
+
+	</Loggers>
+
+</Configuration>

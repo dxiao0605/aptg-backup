@@ -1,0 +1,116 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta name="generator" content="HTML Tidy for HTML5 for Windows version 5.6.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>亞太電信-能源平台</title>
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+
+<link rel="stylesheet" href="css/pub/bootstrap.min.css" />
+<link rel="stylesheet" href="css/pub/all.css" />
+<link href="css/pub/bootstrap-slider.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/pub/pretty-checkbox.min.css" />
+<link rel="stylesheet" href="css/pub/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="css/def/accConfig.css" />
+<link rel="stylesheet" href="css/def/common.css" />
+
+<script src="js/pub/jquery.min.js"></script>
+<script src="js/pub/bootstrap.min.js"></script>
+<script src="js/pub/bootstrap-slider.js"></script>
+<script src="js/pub/jquery.dataTables.min.js"></script>
+<script src="js/pub/canvasjs.min.js"></script>
+<script src="js/pub/jsonpath-0.8.0.js"></script>
+<script src="js/pub/loader.js"></script>
+
+
+<script src="js/def/common.js"></script>
+<script src="js/def/accConfig.js"></script>
+
+
+
+</head>
+<body>
+
+
+	<div class="container-fluid">
+
+
+		<div id="header"></div>
+
+
+		<div class="row mt-4">
+
+			<div class="col-2">
+				<div id="side-bar" class=""></div>
+			</div>
+
+			<div class="col-8">
+
+		
+					<ul class="nav nav-tabs row" role="tablist">
+						<li class="nav-item ml-2"><a class="nav-link active" data-toggle="tab" href="#accounts">帳號管理</a></li>
+						<li class="nav-item ml-2"><a class="nav-link" data-toggle="tab" href="#custchilds">分公司管理</a></li>
+						<li class="nav-item ml-2"><a class="nav-link" data-toggle="tab" href="#locinfo">建築物管理</a></li>
+						<li class="nav-item ml-2"><a class="nav-link" data-toggle="tab" href="#iTouchs">Itouch管理</a></li>
+						<li class="nav-item ml-2"><a class="nav-link" data-toggle="tab" href="#mdevice">裝置管理</a></li>
+						
+					</ul>
+
+					<!-- Tab panes -->
+				<div class="tab-content">
+
+
+					<div class="container tab-pane active " id="accounts">
+
+						
+						<button type="button" class="btn btn-success col-2 mt-4" onclick="addAccount()">新增帳號</button>
+						<table id="acc_tables" class="cell-border stripe order-column hover my-5" style="width: 120%"></table>
+					</div>
+
+
+					<div class="container tab-pane fade " id="custchilds">
+						
+						<button type="button" class="btn btn-success col-2 mt-4" onclick="addCustChild()">新增分公司</button>
+						<table id="custchild_tables" class="cell-border stripe order-column hover my-5" style="width: 120%"></table>
+					</div>
+					
+					
+					<div class="container tab-pane fade " id="locinfo">
+						
+						<button type="button" class="btn btn-success col-2 mt-4" onclick="addBuilding()">新增建築物</button>
+						<button type="button" class="btn btn-success col-2 mt-4" onclick="addOffice()">新增辦公室</button>
+						<div id="org_building"></div>
+					</div>
+
+                    <div class="container tab-pane fade" id=iTouchs>
+
+						
+						<button type="button" class="btn btn-success col-2 mt-4" onclick="addiTouch()">新增iTouch</button>
+						<table id="itoch_tables" class="cell-border stripe order-column hover my-5" style="width: 120%"></table>
+					</div>
+
+                   <div class="container tab-pane fade" id="mdevice">
+
+						
+						<button type="button" class="btn btn-success col-2 mt-4" onclick="addDevice()">新增裝置</button>
+						<table id="device_tables" class="cell-border stripe order-column hover my-5" style="width: 120%"></table>
+						
+						
+						
+					</div>
+
+
+
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+<div id="add-acount"></div>
+<div id="add-custchild"></div>
+</body>
+</html>

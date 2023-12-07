@@ -1,0 +1,141 @@
+#!/bin/bash
+
+
+
+#mysql -s -usmscAP123 -psmscAP123@1234 -h 10.31.151.55<<<"select replace(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),'.',''),s_id,msg_content,sender,msisdn_lst from msgweb.sms_req where time_spec like '%selectedRoutineOption-daily%'"
+
+#export LANG=zh_TW.UTF-8
+# Daily 
+
+log_s_time=$(date +%Y%m%d-%H%M%S)  
+log=/home/smsAP/batch_log/RoutineSMS-Ins.$(date +%Y%m%d)
+
+
+cd /home/smsAP/routineSMS
+
+today=$(date +%Y-%m-%d)
+
+echo "----------------------------------------------------------------------------------">> $log
+echo "Start Batch -"$today >> $log
+
+
+echo "Daily Start" >> $log
+
+SQL="select trim(concat(replace(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),'.',':'),':00')) as t_time,s_id,sender,msisdn_lst,trim(msg_content) 
+from msgweb.sms_req 
+where 1=1
+and status ='I'
+and time_spec like '%selectedRoutineOption-daily%' 
+and concat(s_id,'#',sender,'#',concat(DATE_FORMAT(now(),'%Y-%m-%d'),' ',concat(replace(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),'.',':'),':00'))) not in (select concat(sms_box_seq,'#',a_num,'#',target_time) from msgweb.sms_send_msg)"
+echo -e $SQL >> $log
+
+while read s_time s_id sender to_msisdn msg
+do
+
+echo 	"Daily Loop"  >> $log
+echo 	"$to_msisdn"  >> $log	
+IFS=","
+for msisdn in $to_msisdn
+do
+  echo "$s_time*$s_id*$sender*$msisdn*$msg" >> $log
+  
+s_date=$today" "$s_time  
+  
+SQL="INSERT INTO sms_send_msg(sms_box_seq,a_num,b_num,msg,sms_type,status,target_time)VALUES('$s_id""','"$sender"','"$msisdn"','"$msg"','selectedRoutineOption-daily','O','"$s_date"')"    
+echo -e $SQL  >> $log
+  
+  
+mysql -s -vv  -usmscAP123 -psmscAP123@1234 --default-character-set=utf8 -h 10.31.151.55  msgweb -e "$SQL"
+  
+done
+	
+	
+done < <(echo "$SQL" | mysql -s -usmscAP123 -psmscAP123@1234 --default-character-set=utf8 -h 10.31.151.55)
+
+
+
+#weekly
+
+echo "weekly Start" >> $log	
+
+SQL="select trim(concat(replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00')) as t_time
+,trim(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';weekdays-',-1))
+,s_id,sender,msisdn_lst,trim(msg_content) 
+from msgweb.sms_req 
+where 1=1
+and status ='I'
+and time_spec like '%selectedRoutineOption-weekly%' 
+and concat(s_id,'#',sender,'#',DATE_FORMAT(now(),'%Y-%m-%d'),' ',replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00') not in (select concat(sms_box_seq,'#',a_num,'#',target_time) from msgweb.sms_send_msg)	
+and INSTR( time_spec, trim(DATE_FORMAT(now(),'%a')) )  > 0
+"
+
+echo -e $SQL >> $log
+
+while read s_time s_week s_id sender to_msisdn msg
+do
+echo 	"weekly Loop"   >> $log 
+echo 	"$to_msisdn"	>> $log
+IFS=","
+for msisdn in $to_msisdn
+do
+  echo "$s_time*$s_week*$s_id*$sender*$msisdn*$msg"
+  
+s_date=$today" "$s_time  
+  
+SQL="INSERT INTO sms_send_msg(sms_box_seq,a_num,b_num,msg,sms_type,status,target_time)VALUES('$s_id""','"$sender"','"$msisdn"','"$msg"','selectedRoutineOption-weekly','O','"$s_date"')"    
+echo -e $SQL  >> $log
+  
+  
+mysql -s -vv  -usmscAP123 -psmscAP123@1234 --default-character-set=utf8 -h 10.31.151.55  msgweb -e "$SQL"
+  
+done
+
+	
+done < <(echo "$SQL" | mysql -s -usmscAP123 -psmscAP123@1234 --default-character-set=utf8 -h 10.31.151.55)
+
+
+#monthly
+
+echo "monthly Start" >> $log
+
+SQL="select trim(concat(replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00')) as t_time
+,trim(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, ';monthdays-', -1),';',1)) as dayofmonth
+,s_id,sender,msisdn_lst,trim(msg_content) 
+from msgweb.sms_req 
+where 1=1
+and status ='I'
+and time_spec like '%selectedRoutineOption-monthly%' 
+and concat(s_id,'#',sender,'#',DATE_FORMAT(now(),'%Y-%m-%d'),' ',replace(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'time_spec-', -1),';',1),'.',':'),':00') not in (select concat(sms_box_seq,'#',a_num,'#',target_time) from msgweb.sms_send_msg)	
+and DATE_FORMAT(now(),'%Y/%m/%d') >= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',1)
+and DATE_FORMAT(now(),'%Y/%m/%d') <= SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, 'period_spec-', -1),'.',-1)
+and INSTR( trim(SUBSTRING_INDEX(SUBSTRING_INDEX(time_spec, ';monthdays-', -1),';',1)), trim(DAYOFMONTH(now())))  > 0
+"
+
+
+echo -e $SQL >> $log
+
+while read s_time s_month s_id sender to_msisdn msg
+do
+echo 	"monthly Loop"    >> $log
+echo 	"$to_msisdn"	>> $log
+IFS=","
+for msisdn in $to_msisdn
+do
+  echo "$s_time*$s_month*$s_id*$sender*$msisdn*$msg" >> $log
+  
+s_date=$today" "$s_time  
+  
+SQL="INSERT INTO sms_send_msg(sms_box_seq,a_num,b_num,msg,sms_type,status,target_time)VALUES('$s_id""','"$sender"','"$msisdn"','"$msg"','selectedRoutineOption-monthly','O','"$s_date"')"    
+echo -e $SQL  >> $log
+  
+  
+mysql -s -vv  -usmscAP123 -psmscAP123@1234 --default-character-set=utf8 -h 10.31.151.55  msgweb -e "$SQL"
+  
+done
+
+done < <(echo "$SQL" | mysql -s -usmscAP123 -psmscAP123@1234 --default-character-set=utf8 -h 10.31.151.55)
+
+
+echo "End Batch -"$today >> $log
+
+exit;

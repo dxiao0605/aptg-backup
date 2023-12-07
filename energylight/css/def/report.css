@@ -1,0 +1,30 @@
+#accounts select{  
+   width: 100px;  
+   height:100px;  
+  }  
+  
+  
+ .nav-tabs .nav-link.active {
+  background: moccasin;
+  border-bottom: 2px solid green;
+}
+
+.nav-tabs .nav-link {
+  border-bottom: 2px solid grey !important;
+  padding-left: 3px;
+  color : black;
+}
+
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+table{
+border-collapse: separate !important;
+}
+
+
+ .total_line {
+            border: 3px solid LimeGreen;
+        }

@@ -1,0 +1,14 @@
+
+Testing 2 - Send Http POST request
+
+Sending 'POST' request to URL : http://10.31.79.18:4312/cmsweb/CWS/GetVoiceBasicStatus.jsp?command=GetVoiceBasicStatus&MDN=0973291018&contractId=&ServiceID=SMS&system=MSG&channelId=MSG
+Post parameters : 
+Response Code : 200
+<?xml version="1.0" encoding="Big5"?><cws-api><result>0</result><MDN>0973291018</MDN><errMsg></errMsg><FraudFlag>N</FraudFlag><command>GetVoiceBasicStatus</command><serviceList><ApplyStatus>Y</ApplyStatus><ServiceID>SMS</ServiceID></serviceList></cws-api>
+
+Testing 2 - Send Http POST request
+
+Sending 'POST' request to URL : http://10.31.79.18:4312/cmsweb/CWS/GetVoiceBasicStatus.jsp?command=GetVoiceBasicStatus&MDN=&contractId=4G-16030900226&ServiceID=SMS&system=MSG&channelId=MSG
+Post parameters : 
+Response Code : 200
+<?xml version="1.0" encoding="Big5"?><cws-api><result>0</result><MDN>0973291018</MDN><errMsg></errMsg><FraudFlag>N</FraudFlag><command>GetVoiceBasicStatus</command><serviceList><ApplyStatus>Y</ApplyStatus><ServiceID>SMS</ServiceID></serviceList></cws-api>

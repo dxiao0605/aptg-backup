@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- status=debug 可以查看log4j的装配过程 
+All < Trace < Debug < Info < Warn < Error < Fatal < OFF
+-->  
+<Configuration status="INFO" monitorInterval="1800">  
+  
+    <properties>
+        <property name="LOG_HOME">/opt/batt/logs/BatteryServer</property>
+        <property name="FILE_NAME">battery</property>
+    </properties>
+
+    <Loggers>
+        <Logger name="aptg.battery" level="info" additivity="false">
+			<appender-ref ref="battery_info"/>
+        </Logger>
+        
+        <Logger name="aptg.dao" level="info" additivity="false">
+			<appender-ref ref="battery_db"/>
+        </Logger>
+    
+        <Logger name="aptg.handle.b168" level="info" additivity="false">
+			<appender-ref ref="battery_b168"/>
+        </Logger>
+        
+        <Logger name="aptg.handle.chgconf" level="info" additivity="false">
+			<appender-ref ref="battery_chgconf"/>
+        </Logger>
+        
+        <Logger name="aptg.handle.cmd" level="info" additivity="false">
+			<appender-ref ref="battery_cmd"/>
+        </Logger>
+        
+		<Root level="error" additivity="false">
+	    	<appender-ref ref="Console"/>
+		</Root>
+    </Loggers>
+    
+	<Appenders>
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t %c] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<!-- 啟動&其他資訊 -->
+		<RollingRandomAccessFile name="battery_info"
+			fileName="${LOG_HOME}/${FILE_NAME}_info.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/info/${FILE_NAME}_info-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<!-- 每天生成一个日志文件 -->
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<!-- 每到10M生成一个日志文件 -->
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/info/${FILE_NAME}_info*.log" />
+					<!--刪除90天前的文件 -->
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+		
+		<!-- db exception -->
+		<RollingRandomAccessFile name="battery_db"
+			fileName="${LOG_HOME}/${FILE_NAME}_db.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/db/${FILE_NAME}_db-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/db/${FILE_NAME}_db*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+		
+		<!-- 資料上傳 -->
+		<RollingRandomAccessFile name="battery_b168"
+			fileName="${LOG_HOME}/${FILE_NAME}_b168.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/b168/${FILE_NAME}_b168-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/b168/${FILE_NAME}_b168*.log.gz" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+		
+		<!-- 修改config (companycode, impType, disconnect, alert1, alert2, ...) -->
+		<RollingRandomAccessFile name="battery_chgconf"
+			fileName="${LOG_HOME}/${FILE_NAME}_chgconf.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/chgconf/${FILE_NAME}_chgconf-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/chgconf/${FILE_NAME}_chgconf*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+		
+		<!-- 下行指令 -->
+		<RollingRandomAccessFile name="battery_cmd"
+			fileName="${LOG_HOME}/${FILE_NAME}_cmd.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/cmd/${FILE_NAME}_cmd-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/cmd/${FILE_NAME}_cmd*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+	</Appenders>
+	
+</Configuration>  

@@ -1,0 +1,21 @@
+= 亞太電信Gt-Ething Open Data 平台
+
+== Overview
+台肥專案
+
+=== Version information
+Version: 版本：1.0
+
+=== Contact information
+Contact: 亞太電信-資訊中心-加值服務系統部-系統架構暨工程組
+
+Terms of service: 相关url
+
+=== URI scheme
+BasePath: /
+
+=== Tags
+
+* 台肥API測試: 查詢裝置相關操作
+
+

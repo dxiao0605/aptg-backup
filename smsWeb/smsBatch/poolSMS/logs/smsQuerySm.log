@@ -1,0 +1,210 @@
+2018-11-22 09:29:04.650 INFO [main][][smsQuerySm] - Initialising...------------------------------------------------------------------
+2018-11-22 09:29:04.660 INFO [main][][smsQuerySm] - Load Config ......
+2018-11-22 09:29:04.661 INFO [main][][smsQuerySm] - psSeq=Ps-Seq-20181122092904661
+2018-11-22 09:29:04.662 INFO [main][][smsQuerySm] - SMPPTest.bind()
+2018-11-22 09:29:04.687 INFO [main][][smsQuerySm] - Bind request (bindreq: (pdu: cmdLength=0 cmdID=2 cmdStatus=0 seqNumber=[1]) sysID:websmstde pwd:1234 sysType:ESME ver:52 addrRang:(addrrang: ton:1 npi:1 addrRange:11*) ) 
+2018-11-22 09:29:04.822 INFO [main][][smsQuerySm] - Bind response (bindresp: (pdu: cmdLength=26 cmdID=80000002 cmdStatus=0 seqNumber=1) sysID:websmstde) 
+2018-11-22 09:29:04.822 INFO [main][][smsQuerySm] - bind finish
+2018-11-22 09:29:04.823 INFO [main][][smsQuerySm] - QuerySM...Start
+2018-11-22 09:29:04.823 INFO [main][][smsQuerySm] - Connecting to database...
+2018-11-22 09:29:15.170 INFO [main][][smsQuerySm] - mid_seq=11,msg_id=0019822880,a_num=0973291018
+2018-11-22 09:29:15.170 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:15.170 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[2]) msgID:0019822880 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:15.274 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=2) msgID=0019822880 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:15.274 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:15.274 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:15.275 INFO [main][][smsQuerySm] - mid_seq=12,msg_id=0019822896,a_num=0973291018
+2018-11-22 09:29:15.275 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:15.275 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[3]) msgID:0019822896 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:15.478 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=3) msgID=0019822896 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:15.479 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:15.479 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:15.480 INFO [main][][smsQuerySm] - mid_seq=13,msg_id=0019822912,a_num=0973291018
+2018-11-22 09:29:15.480 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:15.480 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[4]) msgID:0019822912 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:15.583 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=4) msgID=0019822912 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:15.583 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:15.583 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:15.584 INFO [main][][smsQuerySm] - mid_seq=14,msg_id=0019825704,a_num=0973291018
+2018-11-22 09:29:15.584 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:15.584 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[5]) msgID:0019825704 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:15.788 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=5) msgID=0019825704 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:15.788 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:15.789 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:15.789 INFO [main][][smsQuerySm] - mid_seq=15,msg_id=0019825720,a_num=0973291018
+2018-11-22 09:29:15.789 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:15.790 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[6]) msgID:0019825720 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:15.893 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=6) msgID=0019825720 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:15.893 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:15.893 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:15.894 INFO [main][][smsQuerySm] - mid_seq=16,msg_id=0019825736,a_num=0973291018
+2018-11-22 09:29:15.894 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:15.894 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[7]) msgID:0019825736 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.097 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=7) msgID=0019825736 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:16.098 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:16.098 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.098 INFO [main][][smsQuerySm] - mid_seq=17,msg_id=0019825752,a_num=0973291018
+2018-11-22 09:29:16.098 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:16.099 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[8]) msgID:0019825752 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.202 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=8) msgID=0019825752 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:16.203 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:16.203 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.204 INFO [main][][smsQuerySm] - mid_seq=18,msg_id=0019825776,a_num=0973291018
+2018-11-22 09:29:16.204 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:16.204 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[9]) msgID:0019825776 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.408 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=9) msgID=0019825776 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:16.408 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:16.408 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.408 INFO [main][][smsQuerySm] - mid_seq=19,msg_id=0019825792,a_num=0973291018
+2018-11-22 09:29:16.409 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:16.409 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[10]) msgID:0019825792 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.512 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=0 seqNumber=10) msgID=0019825792 finalDate= msgState=1 errCode=0 Optional=) 
+2018-11-22 09:29:16.512 INFO [main][][smsQuerySm] - --1-0
+2018-11-22 09:29:16.512 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.512 INFO [main][][smsQuerySm] - mid_seq=20,msg_id=0019825808,a_num=0973291018
+2018-11-22 09:29:16.513 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:16.513 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[11]) msgID:0019825808 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.616 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=11) msgID=0019825808 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:16.616 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:16.616 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.617 INFO [main][][smsQuerySm] - mid_seq=21,msg_id=0019826656,a_num=0973291018
+2018-11-22 09:29:16.617 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:16.617 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[12]) msgID:0019826656 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.819 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=12) msgID=0019826656 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 09:29:16.820 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 09:29:16.820 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.820 INFO [main][][smsQuerySm] - mid_seq=22,msg_id=0019826672,a_num=0973291018
+2018-11-22 09:29:16.820 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 09:29:16.821 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[13]) msgID:0019826672 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 09:29:16.924 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=0 seqNumber=13) msgID=0019826672 finalDate= msgState=1 errCode=0 Optional=) 
+2018-11-22 09:29:16.924 INFO [main][][smsQuerySm] - --1-0
+2018-11-22 09:29:16.924 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 09:29:16.926 INFO [main][][smsQuerySm] - QuerySM...End
+2018-11-22 09:29:16.926 INFO [main][][smsQuerySm] - SMPPTest.unbind()
+2018-11-22 09:29:16.926 INFO [main][][smsQuerySm] - Going to unbind.
+2018-11-22 09:29:16.927 INFO [main][][smsQuerySm] - It can take a while to stop the receiver.
+2018-11-22 09:29:17.038 INFO [main][][smsQuerySm] - Unbind response (unbind_resp: (pdu: cmdLength=16 cmdID=80000006 cmdStatus=0 seqNumber=14) ) 
+2018-11-22 09:29:17.039 INFO [main][][smsQuerySm] - unbind finish
+2018-11-22 10:14:39.957 INFO [main][][smsQuerySm] - Initialising...------------------------------------------------------------------
+2018-11-22 10:14:39.967 INFO [main][][smsQuerySm] - Load Config ......
+2018-11-22 10:14:39.969 INFO [main][][smsQuerySm] - psSeq=Ps-Seq-20181122101439968
+2018-11-22 10:14:39.969 INFO [main][][smsQuerySm] - SMPPTest.bind()
+2018-11-22 10:14:39.994 INFO [main][][smsQuerySm] - Bind request (bindreq: (pdu: cmdLength=0 cmdID=2 cmdStatus=0 seqNumber=[1]) sysID:websmstde pwd:1234 sysType:ESME ver:52 addrRang:(addrrang: ton:1 npi:1 addrRange:11*) ) 
+2018-11-22 10:14:40.110 INFO [main][][smsQuerySm] - Bind response (bindresp: (pdu: cmdLength=26 cmdID=80000002 cmdStatus=0 seqNumber=1) sysID:websmstde) 
+2018-11-22 10:14:40.111 INFO [main][][smsQuerySm] - bind finish
+2018-11-22 10:14:40.111 INFO [main][][smsQuerySm] - QuerySM...Start
+2018-11-22 10:14:40.111 INFO [main][][smsQuerySm] - Connecting to database...
+2018-11-22 10:14:50.426 INFO [main][][smsQuerySm] - mid_seq=11,msg_id=0019822880,a_num=0973291018
+2018-11-22 10:14:50.426 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:50.427 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[2]) msgID:0019822880 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:50.529 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=2) msgID=0019822880 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:50.530 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:50.530 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:50.530 INFO [main][][smsQuerySm] - mid_seq=12,msg_id=0019822896,a_num=0973291018
+2018-11-22 10:14:50.531 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:50.531 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[3]) msgID:0019822896 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:50.699 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=3) msgID=0019822896 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:50.699 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:50.699 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:50.700 INFO [main][][smsQuerySm] - mid_seq=13,msg_id=0019822912,a_num=0973291018
+2018-11-22 10:14:50.700 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:50.700 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[4]) msgID:0019822912 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:50.803 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=4) msgID=0019822912 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:50.803 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:50.803 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:50.804 INFO [main][][smsQuerySm] - mid_seq=14,msg_id=0019825704,a_num=0973291018
+2018-11-22 10:14:50.804 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:50.804 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[5]) msgID:0019825704 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.008 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=5) msgID=0019825704 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.008 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.008 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.009 INFO [main][][smsQuerySm] - mid_seq=15,msg_id=0019825720,a_num=0973291018
+2018-11-22 10:14:51.009 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.009 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[6]) msgID:0019825720 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.111 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=6) msgID=0019825720 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.112 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.112 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.112 INFO [main][][smsQuerySm] - mid_seq=16,msg_id=0019825736,a_num=0973291018
+2018-11-22 10:14:51.113 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.113 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[7]) msgID:0019825736 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.316 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=7) msgID=0019825736 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.316 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.316 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.317 INFO [main][][smsQuerySm] - mid_seq=17,msg_id=0019825752,a_num=0973291018
+2018-11-22 10:14:51.317 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.317 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[8]) msgID:0019825752 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.420 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=8) msgID=0019825752 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.420 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.421 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.421 INFO [main][][smsQuerySm] - mid_seq=18,msg_id=0019825776,a_num=0973291018
+2018-11-22 10:14:51.421 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.421 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[9]) msgID:0019825776 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.624 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=9) msgID=0019825776 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.625 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.625 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.625 INFO [main][][smsQuerySm] - mid_seq=19,msg_id=0019825792,a_num=0973291018
+2018-11-22 10:14:51.626 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.626 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[10]) msgID:0019825792 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.729 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=10) msgID=0019825792 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.729 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.729 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.729 INFO [main][][smsQuerySm] - mid_seq=20,msg_id=0019825808,a_num=0973291018
+2018-11-22 10:14:51.730 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.730 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[11]) msgID:0019825808 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:51.934 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=11) msgID=0019825808 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:51.934 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:51.935 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:51.935 INFO [main][][smsQuerySm] - mid_seq=21,msg_id=0019826656,a_num=0973291018
+2018-11-22 10:14:51.935 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:51.936 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[12]) msgID:0019826656 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:52.139 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=12) msgID=0019826656 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:52.139 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:52.139 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.139 INFO [main][][smsQuerySm] - mid_seq=22,msg_id=0019826672,a_num=0973291018
+2018-11-22 10:14:52.140 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.140 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[13]) msgID:0019826672 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:52.243 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=46 cmdID=80000003 cmdStatus=0 seqNumber=13) msgID=0019826672 finalDate=181122101250032+ msgState=1 errCode=31 Optional=) 
+2018-11-22 10:14:52.243 INFO [main][][smsQuerySm] - -181122101250032+-1-31
+2018-11-22 10:14:52.243 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.243 INFO [main][][smsQuerySm] - mid_seq=23,msg_id=0019827712,a_num=0973291018
+2018-11-22 10:14:52.244 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.244 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[14]) msgID:0019827712 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:52.424 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=14) msgID=0019827712 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:52.424 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:52.425 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.425 INFO [main][][smsQuerySm] - mid_seq=24,msg_id=0019827744,a_num=0973291018
+2018-11-22 10:14:52.425 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.425 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[15]) msgID:0019827744 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:52.528 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=8 seqNumber=15) msgID=0019827744 finalDate= msgState=0 errCode=0 Optional=) 
+2018-11-22 10:14:52.529 INFO [main][][smsQuerySm] - --0-0
+2018-11-22 10:14:52.529 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.529 INFO [main][][smsQuerySm] - mid_seq=25,msg_id=0019827760,a_num=0973291018
+2018-11-22 10:14:52.530 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.530 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[16]) msgID:0019827760 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:52.633 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=0 seqNumber=16) msgID=0019827760 finalDate= msgState=1 errCode=0 Optional=) 
+2018-11-22 10:14:52.633 INFO [main][][smsQuerySm] - --1-0
+2018-11-22 10:14:52.634 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.634 INFO [main][][smsQuerySm] - mid_seq=26,msg_id=0019827768,a_num=0973291018
+2018-11-22 10:14:52.634 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.634 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[17]) msgID:0019827768 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886973291018)  ) 
+2018-11-22 10:14:52.738 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=0 seqNumber=17) msgID=0019827768 finalDate= msgState=1 errCode=0 Optional=) 
+2018-11-22 10:14:52.738 INFO [main][][smsQuerySm] - --1-0
+2018-11-22 10:14:52.738 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.739 INFO [main][][smsQuerySm] - mid_seq=27,msg_id=0019827784,a_num=0982174118
+2018-11-22 10:14:52.739 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.739 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[18]) msgID:0019827784 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886982174118)  ) 
+2018-11-22 10:14:52.842 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=0 seqNumber=18) msgID=0019827784 finalDate= msgState=1 errCode=0 Optional=) 
+2018-11-22 10:14:52.842 INFO [main][][smsQuerySm] - --1-0
+2018-11-22 10:14:52.842 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.842 INFO [main][][smsQuerySm] - mid_seq=28,msg_id=0019827800,a_num=0982174118
+2018-11-22 10:14:52.843 INFO [main][][smsQuerySm] - SMPPTest.query()
+2018-11-22 10:14:52.843 INFO [main][][smsQuerySm] - Query request (query: (pdu: cmdLength=0 cmdID=3 cmdStatus=0 seqNumber=[19]) msgID:0019827800 srcAddr:(addr: ton:0 npi:0 DATA.DFLT_ADDR:20100001886982174118)  ) 
+2018-11-22 10:14:52.945 INFO [main][][smsQuerySm] - Query response (query_resp: (pdu: cmdLength=30 cmdID=80000003 cmdStatus=0 seqNumber=19) msgID=0019827800 finalDate= msgState=1 errCode=0 Optional=) 
+2018-11-22 10:14:52.946 INFO [main][][smsQuerySm] - --1-0
+2018-11-22 10:14:52.946 INFO [main][][smsQuerySm] - query finish..
+2018-11-22 10:14:52.947 INFO [main][][smsQuerySm] - QuerySM...End
+2018-11-22 10:14:52.947 INFO [main][][smsQuerySm] - SMPPTest.unbind()
+2018-11-22 10:14:52.948 INFO [main][][smsQuerySm] - Going to unbind.
+2018-11-22 10:14:52.948 INFO [main][][smsQuerySm] - It can take a while to stop the receiver.
+2018-11-22 10:14:53.057 INFO [main][][smsQuerySm] - Unbind response (unbind_resp: (pdu: cmdLength=16 cmdID=80000006 cmdStatus=0 seqNumber=20) ) 
+2018-11-22 10:14:53.057 INFO [main][][smsQuerySm] - unbind finish

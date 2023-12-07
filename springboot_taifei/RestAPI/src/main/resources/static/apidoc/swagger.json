@@ -1,0 +1,81 @@
+{
+  "basePath": "/pociot/v1",
+  "info": {
+    "contact": {
+      "name": "亞太電信-資訊中心-加值服務系統部-系統架構暨工程組"
+    },
+    "description": "專案",
+    "termsOfService": "相关url",
+    "title": "亞太電信Gt-Ething Open Data 平台",
+    "version": "版本：1.0"
+  },
+  "paths": {
+
+    "/device/{device_id}/sensor/rawdata": {
+      "get": {
+        "deprecated": false,
+        "description": "裝置資訊api",
+        "operationId": "findUsingGET",
+        "parameters": [
+          {
+            "default": "1234",
+            "description": "請輸入 token",
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "type": "string"
+          },
+
+          {
+          "description": "請輸入裝置編號 QT-DESC-4G-1814017",
+          "in": "path",
+          "name": "device_id",
+          "required": true,
+          "type": "string",
+          "default": "QT-DESC-4G-1814017"
+        },  {
+          "description": "起始時間 --1554884100",
+          "in": "query",
+          "name": "start",
+          "required": true,
+          "type": "string",
+          "default": "1554884100"
+        },{
+          "description": "結束時間 --1554884100",
+          "in": "query",
+          "name": "end",
+          "required": false,
+          "type": "string",
+          "default": "1554884100"
+        }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "裝置",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "summary": "取得裝置資訊",
+        "tags": ["API測試"]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "tags": [{
+    "description": "查詢裝置相關操作",
+    "name": "API測試"
+  }
+  ]
+}

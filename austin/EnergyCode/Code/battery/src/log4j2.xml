@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 All < Trace < Debug < Info < Warn < Error 
+	< Fatal < OFF -->
+<Configuration status="Info" monitorInterval="1800">
+	<properties>
+		<property name="LOG_HOME">${sys:catalina.home}/logs/batteryLog</property>
+		<property name="FILE_NAME">battery</property>	
+	</properties>
+
+	<Appenders>
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!--控制台只輸出level及以上級別的信息（onMatch），其他的直接拒絕（onMismatch）-->
+			<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/> 
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t %c] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<RollingRandomAccessFile name="wLogFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%X{PID}][%logger{36}] - %msg%n" />
+			<Policies>
+				<!-- 每天生成一个日志文件 -->
+				<TimeBasedTriggeringPolicy interval="1"	modulate="true" />
+				<!-- 每到10M生成一个日志文件 -->
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="999">			
+				<delete basePath="${LOG_HOME}" maxDepth="2">
+	                	<IfFileName glob="*/${FILE_NAME}*.log.gz" />
+	                    <!--刪除90天前的文件-->
+	                	<IfLastModified age="90d" />
+            	</delete>
+			</DefaultRolloverStrategy>		
+		</RollingRandomAccessFile>
+		<Async name="wLog">
+			<AppenderRef ref="wLogFile" />
+		</Async>
+	</Appenders>
+	<Loggers>
+		<Logger name="aptg.battery" level="debug"
+			additivity="true">
+			<AppenderRef ref="wLog" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>  

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- status=debug 可以查看log4j的装配过程 
+All < Trace < Debug < Info < Warn < Error < Fatal < OFF
+-->  
+<Configuration status="INFO" monitorInterval="1800">  
+  
+    <properties>
+        <property name="LOG_HOME">/opt/batt/logs/BatteryTask</property>
+        <property name="FILE_NAME">batterytask</property>
+    </properties>
+
+    <Loggers>
+        <Logger name="aptg.dao" level="info" additivity="false">
+			<appender-ref ref="battery_db"/>
+        </Logger>
+        
+        <Logger name="aptg.task.OfflineTask" level="info" additivity="false">
+			<appender-ref ref="OfflineTask"/>
+        </Logger>
+        
+        <Logger name="aptg.task.DailyStatusTask" level="info" additivity="false">
+			<appender-ref ref="DailyStatusTask"/>
+        </Logger>
+        
+		<Root level="error" additivity="false">
+	    	<appender-ref ref="Console"/>
+		</Root>
+    </Loggers>
+    
+    
+	<Appenders>
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t %c] %-5level %logger{36} - %msg%n" />
+		</Console>
+		
+		<!-- db exception -->
+		<RollingRandomAccessFile name="battery_db"
+			fileName="${LOG_HOME}/${FILE_NAME}_db.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/db/${FILE_NAME}_db-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/db/${FILE_NAME}_db*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+
+		<!-- 每小時離線判斷task -->
+		<RollingRandomAccessFile name="OfflineTask"
+			fileName="${LOG_HOME}/${FILE_NAME}_offlinetask.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/offlinetask/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/offlinetask/${FILE_NAME}*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+		
+		<!-- 每小時判斷跨0點的時區前一天站台狀態task -->
+		<RollingRandomAccessFile name="DailyStatusTask"
+			fileName="${LOG_HOME}/${FILE_NAME}_dailystatustask.log"
+			filePattern="${LOG_HOME}/$${date:yyyy-MM}/dailystatustask/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy/MM/dd HH:mm:ss} %c{1}-[%tid] - %msg%n%throwable</pattern>		         
+			</PatternLayout>
+			
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			
+			<DefaultRolloverStrategy max="999">
+				<delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfFileName glob="*/dailystatustask/${FILE_NAME}*.log" />
+					<IfLastModified age="90d" />
+				</delete>
+			</DefaultRolloverStrategy> 
+		</RollingRandomAccessFile>
+		
+	</Appenders>
+	
+</Configuration>  

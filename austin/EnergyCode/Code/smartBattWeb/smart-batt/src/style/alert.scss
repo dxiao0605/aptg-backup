@@ -1,0 +1,55 @@
+@charset 'UTF-8';
+
+// $leftSideWidth: 60%;
+// $rightSideWidth: 40%;
+$leftSideWidth: 50%;
+$rightSideWidth: 50%;
+
+.alertDialog {
+    &_subTitle{
+        width: 100%;
+    }
+    &_leftSide{  //左邊(發生時間)
+        display: inline-block;
+        padding:0;
+        width: $leftSideWidth;
+        vertical-align: top;
+        // @media screen and (min-width:576px) {}   //col-sm
+    }
+    &_rightSide{  //右邊(告警條件)
+        display: inline-block;
+        padding:0;
+        width: $rightSideWidth;
+        vertical-align: top;
+        // @media screen and (min-width:576px) {}   //col-sm
+    }
+    &_locationMarker {  //電池位置
+        display: inline-block;
+        padding: 0;
+        width: 100%;
+        vertical-align: top;
+        @media screen and(min-width: 576px) {
+            padding: 0 0.5rem 0 0;
+            width: $leftSideWidth;
+        }
+    }
+    &_closeContent{ //寫下你的解決方案
+        display: inline-block;
+        margin:0;
+        padding: 0;
+        width: 100%;
+        vertical-align: top;
+        @media screen and(min-width: 576px) {
+            padding: 0 0.5rem 0 0;
+            width: $rightSideWidth;
+        }
+    }
+    &_accordion {
+        &-title{
+            cursor: pointer;
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}

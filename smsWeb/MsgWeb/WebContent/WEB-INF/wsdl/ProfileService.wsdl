@@ -1,0 +1,418 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.aptg.com.tw/ws/api/core/ProfileService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProfileService" targetNamespace="http://www.aptg.com.tw/ws/api/core/ProfileService">
+<types>
+<xs:schema xmlns:tns="http://www.aptg.com.tw/ws/api/core/ProfileService" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.aptg.com.tw/ws/api/core/ProfileService" version="1.0">
+<xs:element name="getTerminateProfile" type="tns:getTerminateProfile"/>
+<xs:element name="getTerminateProfileResponse" type="tns:getTerminateProfileResponse"/>
+<xs:element name="getUserProfile" type="tns:getUserProfile"/>
+<xs:element name="getUserProfileResponse" type="tns:getUserProfileResponse"/>
+<xs:element name="memberChangeAccount" type="tns:memberChangeAccount"/>
+<xs:element name="memberChangeAccountResponse" type="tns:memberChangeAccountResponse"/>
+<xs:element name="memberChangePassword" type="tns:memberChangePassword"/>
+<xs:element name="memberChangePasswordResponse" type="tns:memberChangePasswordResponse"/>
+<xs:element name="memberResetPassword" type="tns:memberResetPassword"/>
+<xs:element name="memberResetPasswordResponse" type="tns:memberResetPasswordResponse"/>
+<xs:element name="setContractEMail" type="tns:setContractEMail"/>
+<xs:element name="setContractEMailResponse" type="tns:setContractEMailResponse"/>
+<xs:element name="setReadAgreement" type="tns:setReadAgreement"/>
+<xs:element name="setReadAgreementResponse" type="tns:setReadAgreementResponse"/>
+<xs:element name="subscriberChangePassword" type="tns:subscriberChangePassword"/>
+<xs:element name="subscriberChangePasswordResponse" type="tns:subscriberChangePasswordResponse"/>
+<xs:element name="subscriberResetPassword" type="tns:subscriberResetPassword"/>
+<xs:element name="subscriberResetPasswordResponse" type="tns:subscriberResetPasswordResponse"/>
+<xs:complexType name="getUserProfile">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="userID" type="xs:string"/>
+<xs:element minOccurs="0" name="contractID" type="xs:string"/>
+<xs:element minOccurs="0" name="mdn" type="xs:string"/>
+<xs:element minOccurs="0" name="min" type="xs:string"/>
+<xs:element minOccurs="0" name="email" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getUserProfileResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="response">
+<xs:sequence>
+<xs:element minOccurs="0" name="description" type="xs:string"/>
+<xs:element minOccurs="0" name="profile" type="tns:profile"/>
+<xs:element minOccurs="0" name="resultCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="profile">
+<xs:sequence>
+<xs:element minOccurs="0" name="acceptEpaper" type="tns:acceptance"/>
+<xs:element minOccurs="0" name="address" type="xs:string"/>
+<xs:element minOccurs="0" name="bc" type="xs:string"/>
+<xs:element minOccurs="0" name="birthday" type="xs:string"/>
+<xs:element minOccurs="0" name="bscsCOID" type="xs:string"/>
+<xs:element minOccurs="0" name="bscsCSCODE" type="xs:string"/>
+<xs:element minOccurs="0" name="bscsCSID" type="xs:string"/>
+<xs:element minOccurs="0" name="companyName" type="xs:string"/>
+<xs:element minOccurs="0" name="contactPhone" type="xs:string"/>
+<xs:element minOccurs="0" name="contractID" type="xs:string"/>
+<xs:element minOccurs="0" name="contractStatus" type="tns:yesNoOption"/>
+<xs:element minOccurs="0" name="contractStatusCode" type="xs:string"/>
+<xs:element minOccurs="0" name="customerID" type="xs:string"/>
+<xs:element minOccurs="0" name="disableWeb" type="xs:string"/>
+<xs:element minOccurs="0" name="education" type="xs:string"/>
+<xs:element minOccurs="0" name="email" type="xs:string"/>
+<xs:element minOccurs="0" name="ename" type="xs:string"/>
+<xs:element minOccurs="0" name="gender" type="tns:gender"/>
+<xs:element minOccurs="0" name="isAdult" type="tns:yesNoOption"/>
+<xs:element minOccurs="0" name="jobTitle" type="xs:string"/>
+<xs:element minOccurs="0" name="mdn" type="xs:string"/>
+<xs:element minOccurs="0" name="min" type="xs:string"/>
+<xs:element minOccurs="0" name="mobile1" type="xs:string"/>
+<xs:element minOccurs="0" name="mobile2" type="xs:string"/>
+<xs:element minOccurs="0" name="mobilePhoneType" type="xs:string"/>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+<xs:element minOccurs="0" name="nickname" type="xs:string"/>
+<xs:element minOccurs="0" name="occupation" type="xs:string"/>
+<xs:element minOccurs="0" name="otpStatus" type="xs:string"/>
+<xs:element minOccurs="0" name="personalID" type="xs:string"/>
+<xs:element minOccurs="0" name="productType" type="xs:string"/>
+<xs:element minOccurs="0" name="promotionCode" type="xs:string"/>
+<xs:element minOccurs="0" name="pushMail" type="xs:string"/>
+<xs:element minOccurs="0" name="smscMail" type="xs:string"/>
+<xs:element minOccurs="0" name="telphone1" type="xs:string"/>
+<xs:element minOccurs="0" name="telphone2" type="xs:string"/>
+<xs:element minOccurs="0" name="terminateType" type="xs:string"/>
+<xs:element minOccurs="0" name="uid" type="xs:string"/>
+<xs:element minOccurs="0" name="userType" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setReadAgreement">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="userID" type="xs:string"/>
+<xs:element minOccurs="0" name="contractID" type="xs:string"/>
+<xs:element minOccurs="0" name="mdn" type="xs:string"/>
+<xs:element minOccurs="0" name="min" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setReadAgreementResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setContractEMail">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="userID" type="xs:string"/>
+<xs:element minOccurs="0" name="contractID" type="xs:string"/>
+<xs:element minOccurs="0" name="mdn" type="xs:string"/>
+<xs:element minOccurs="0" name="min" type="xs:string"/>
+<xs:element minOccurs="0" name="email" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setContractEMailResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="response" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTerminateProfile">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="userID" type="xs:string"/>
+<xs:element minOccurs="0" name="contractID" type="xs:string"/>
+<xs:element minOccurs="0" name="mdn" type="xs:string"/>
+<xs:element minOccurs="0" name="min" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTerminateProfileResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="terminateResponse" type="tns:terminateResponse"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="terminateResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="description" type="xs:string"/>
+<xs:element minOccurs="0" name="resultCode" type="xs:string"/>
+<xs:element minOccurs="0" name="terminateprofile" type="tns:terminateProfile"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="terminateProfile">
+<xs:sequence>
+<xs:element name="duplicate" type="xs:boolean"/>
+<xs:element minOccurs="0" name="profile" type="tns:profile"/>
+<xs:element minOccurs="0" name="recordDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="terminateType" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="subscriberChangePassword">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="MDN" type="xs:string"/>
+<xs:element minOccurs="0" name="oldPassword" type="xs:string"/>
+<xs:element minOccurs="0" name="newPassword" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="subscriberChangePasswordResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="subscriberResetPassword">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="MDN" type="xs:string"/>
+<xs:element minOccurs="0" name="personID" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="subscriberResetPasswordResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="memberChangePassword">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="memberID" type="xs:string"/>
+<xs:element minOccurs="0" name="oldPassword" type="xs:string"/>
+<xs:element minOccurs="0" name="newPassword" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="memberChangePasswordResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="memberResetPassword">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="memberID" type="xs:string"/>
+<xs:element minOccurs="0" name="personID" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="memberResetPasswordResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="memberChangeAccount">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceID" type="xs:string"/>
+<xs:element minOccurs="0" name="servicePWD" type="xs:string"/>
+<xs:element minOccurs="0" name="oldAccountID" type="xs:string"/>
+<xs:element minOccurs="0" name="personID" type="xs:string"/>
+<xs:element minOccurs="0" name="newAccountID" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="memberChangeAccountResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:response"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="acceptance">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Y"/>
+<xs:enumeration value="N"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="yesNoOption">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Y"/>
+<xs:enumeration value="N"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="gender">
+<xs:restriction base="xs:string">
+<xs:enumeration value="M"/>
+<xs:enumeration value="F"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+</types>
+<message name="ProfileService_subscriberChangePasswordResponse">
+<part element="tns:subscriberChangePasswordResponse" name="subscriberChangePasswordResponse"/>
+</message>
+<message name="ProfileService_memberResetPasswordResponse">
+<part element="tns:memberResetPasswordResponse" name="memberResetPasswordResponse"/>
+</message>
+<message name="ProfileService_memberChangePassword">
+<part element="tns:memberChangePassword" name="memberChangePassword"/>
+</message>
+<message name="ProfileService_setContractEMail">
+<part element="tns:setContractEMail" name="setContractEMail"/>
+</message>
+<message name="ProfileService_getUserProfile">
+<part element="tns:getUserProfile" name="getUserProfile"/>
+</message>
+<message name="ProfileService_getTerminateProfileResponse">
+<part element="tns:getTerminateProfileResponse" name="getTerminateProfileResponse"/>
+</message>
+<message name="ProfileService_setContractEMailResponse">
+<part element="tns:setContractEMailResponse" name="setContractEMailResponse"/>
+</message>
+<message name="ProfileService_memberChangeAccountResponse">
+<part element="tns:memberChangeAccountResponse" name="memberChangeAccountResponse"/>
+</message>
+<message name="ProfileService_subscriberChangePassword">
+<part element="tns:subscriberChangePassword" name="subscriberChangePassword"/>
+</message>
+<message name="ProfileService_getUserProfileResponse">
+<part element="tns:getUserProfileResponse" name="getUserProfileResponse"/>
+</message>
+<message name="ProfileService_memberChangeAccount">
+<part element="tns:memberChangeAccount" name="memberChangeAccount"/>
+</message>
+<message name="ProfileService_subscriberResetPassword">
+<part element="tns:subscriberResetPassword" name="subscriberResetPassword"/>
+</message>
+<message name="ProfileService_subscriberResetPasswordResponse">
+<part element="tns:subscriberResetPasswordResponse" name="subscriberResetPasswordResponse"/>
+</message>
+<message name="ProfileService_getTerminateProfile">
+<part element="tns:getTerminateProfile" name="getTerminateProfile"/>
+</message>
+<message name="ProfileService_setReadAgreementResponse">
+<part element="tns:setReadAgreementResponse" name="setReadAgreementResponse"/>
+</message>
+<message name="ProfileService_memberChangePasswordResponse">
+<part element="tns:memberChangePasswordResponse" name="memberChangePasswordResponse"/>
+</message>
+<message name="ProfileService_memberResetPassword">
+<part element="tns:memberResetPassword" name="memberResetPassword"/>
+</message>
+<message name="ProfileService_setReadAgreement">
+<part element="tns:setReadAgreement" name="setReadAgreement"/>
+</message>
+<portType name="ProfileService">
+<operation name="getTerminateProfile" parameterOrder="getTerminateProfile">
+<input message="tns:ProfileService_getTerminateProfile"/>
+<output message="tns:ProfileService_getTerminateProfileResponse"/>
+</operation>
+<operation name="getUserProfile" parameterOrder="getUserProfile">
+<input message="tns:ProfileService_getUserProfile"/>
+<output message="tns:ProfileService_getUserProfileResponse"/>
+</operation>
+<operation name="memberChangeAccount" parameterOrder="memberChangeAccount">
+<input message="tns:ProfileService_memberChangeAccount"/>
+<output message="tns:ProfileService_memberChangeAccountResponse"/>
+</operation>
+<operation name="memberChangePassword" parameterOrder="memberChangePassword">
+<input message="tns:ProfileService_memberChangePassword"/>
+<output message="tns:ProfileService_memberChangePasswordResponse"/>
+</operation>
+<operation name="memberResetPassword" parameterOrder="memberResetPassword">
+<input message="tns:ProfileService_memberResetPassword"/>
+<output message="tns:ProfileService_memberResetPasswordResponse"/>
+</operation>
+<operation name="setContractEMail" parameterOrder="setContractEMail">
+<input message="tns:ProfileService_setContractEMail"/>
+<output message="tns:ProfileService_setContractEMailResponse"/>
+</operation>
+<operation name="setReadAgreement" parameterOrder="setReadAgreement">
+<input message="tns:ProfileService_setReadAgreement"/>
+<output message="tns:ProfileService_setReadAgreementResponse"/>
+</operation>
+<operation name="subscriberChangePassword" parameterOrder="subscriberChangePassword">
+<input message="tns:ProfileService_subscriberChangePassword"/>
+<output message="tns:ProfileService_subscriberChangePasswordResponse"/>
+</operation>
+<operation name="subscriberResetPassword" parameterOrder="subscriberResetPassword">
+<input message="tns:ProfileService_subscriberResetPassword"/>
+<output message="tns:ProfileService_subscriberResetPasswordResponse"/>
+</operation>
+</portType>
+<binding name="ProfileServiceBinding" type="tns:ProfileService">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="getTerminateProfile">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getUserProfile">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="memberChangeAccount">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="memberChangePassword">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="memberResetPassword">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="setContractEMail">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="setReadAgreement">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="subscriberChangePassword">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="subscriberResetPassword">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<service name="ProfileService">
+<port binding="tns:ProfileServiceBinding" name="ProfileServicePort">
+<soap:address location="http://10.31.79.7:8000/profile-service/ProfileService"/>
+</port>
+</service>
+</definitions>

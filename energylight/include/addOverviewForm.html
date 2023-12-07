@@ -1,0 +1,46 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<div class="modal fade" id="OverViewFormModal" tabindex="-1" role="dialog" aria-labelledby="OverViewFormLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h5 class="modal-title  w-100 text-center text-white" id="showtblModalLabel">單線圖設定</h5>
+				
+			</div>
+			<div class="modal-body">
+
+
+				<form>
+
+					<div class="form-group">
+						<label for="viewsellabel">總表名稱</label> 
+						<input type="text" class="form-control" id="viewrootname" value ='總表' >
+						<label for="viewsellabel">總表選擇</label>
+						<select class="form-control" id="viewrootsel">
+							
+						</select>
+					</div>
+					
+					
+					<div class="form-group">
+						<label for="DeviceSelect">分表</label> 
+						<select class="form-control" id="viewothersel" multiple>
+							
+						</select>
+					</div>
+
+
+                    <button type="button" class="btn btn-primary"  onclick="OverViewOK()">確認總表</button>
+                   <button type="button" class="btn btn-success"  onclick="addOverViewOther()">新增分表</button>
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal"  onclick="CloseOverView()">離開</button>
+                  
+
+				</form>
+
+
+
+			</div>
+			
+		</div>
+	</div>
+</div>

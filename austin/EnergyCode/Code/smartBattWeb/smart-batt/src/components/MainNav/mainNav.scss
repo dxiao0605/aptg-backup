@@ -1,0 +1,335 @@
+@charset "UTF-8";
+
+%icon {
+    display: inline-block;
+    margin: 0.25rem 0.5rem;
+    position: relative;
+    vertical-align: middle;
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1.5rem;
+    background-size: contain !important;
+    &.loading { background:#fcfcfc; }
+}
+%icon-open {
+    display: inline-block;
+    margin: 0 0.5rem 0.25rem 0.5rem;
+    position: relative;
+    vertical-align: middle;
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1.5rem;
+    background-size: contain !important;
+}
+// 漸層色
+%activeItem {
+    background: linear-gradient(
+        rgba(71, 189, 239, 1) 0%,
+        rgba(71, 189, 239, 1) 50%,
+        rgba(24, 110, 169, 1) 50%,
+        rgba(24, 110, 169, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+        rgba(71, 189, 239, 1) 0%,
+        rgba(71, 189, 239, 1) 50%,
+        rgba(24, 110, 169, 1) 50%,
+        rgba(24, 110, 169, 1) 100%
+    );
+    border-radius: 0.25rem;
+}
+%item {
+    position: relative;
+    cursor: pointer;
+    &:hover,
+    &.active {
+        @extend %activeItem;
+    }
+}
+%disabled {
+    cursor: default;
+    pointer-events: none;
+    color: #7b7b7b;
+    opacity: 0.5;
+}
+
+// common
+// 告警提示(紅圈白字)
+.prompt {
+    position: relative;
+    display: inline-block;
+    margin-left: -1rem;
+    margin-bottom: -0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: rgba(251, 6, 3, 1);
+    color: #ffffff;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 100%;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    &.sub { margin-left: 1rem; margin-bottom: 0; }
+}
+// 圖示
+.icon1200 {
+    background: url("../../image/icon_01.png") no-repeat center center;
+    @extend %icon;
+}
+.icon1300 {
+    background: url("../../image/icon_02.png") no-repeat center center;
+    @extend %icon;
+}
+.icon1400 {
+    background: url("../../image/icon_03.png") no-repeat center center;
+    @extend %icon;
+}
+.icon1500 {
+    background: url("../../image/icon_04.png") no-repeat center center;
+    @extend %icon;
+}
+.icon1600 {
+    background: url("../../image/icon_05.png") no-repeat center center;
+    @extend %icon;
+}
+.icon1700 {
+    background: url("../../image/icon_06.png") no-repeat center center;
+    @extend %icon;
+}
+.icon1800 {
+    background: url("../../image/icon_07.png") no-repeat center center;
+    @extend %icon;
+}
+
+// 選單(含文字)
+.mainNav {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: auto;
+    padding: 0;
+    min-width: 0;
+    width: 60px;
+    height: 100vh;
+    position: relative;
+    background: #1a1a1a url("../../image/sidebar_background-s.jpg");
+    color: #ffffff;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    z-index: 999;
+    &.loading {background: #1a1a1a;}
+    &.open {
+        padding: 1rem;
+        width: 250px;
+        overflow-y: auto;
+        // icon
+        .icon1200,.icon1300,.icon1400,.icon1500,.icon1600,.icon1700,.icon1800 {
+            @extend %icon-open;
+        }
+        .mainNav_toggleBtn {
+            display: inline-block;
+            width: 10%;
+            bottom: 0.5rem;
+            padding: 0.15rem;
+        }
+        .bottom_group {
+            position: fixed;
+            left: 2rem;
+            max-width: 200px;
+            img.mainNav_logo-bottom {
+                margin-left: 13%;
+                margin-right: 15%;
+            }
+            @media screen and (min-height: 475px) {
+                position: absolute;
+                bottom: 0.5rem;
+                .mainNav_toggleBtn {
+                    // padding: 0.15rem;
+                    padding-bottom: 0.15rem;
+                }
+            }
+            @media screen and (min-height: 720px) {
+                bottom: 0.5rem;
+                width: 100%;
+                left: 2rem;
+            }
+            @media screen and (min-height: 737px) {
+                .mainNav_toggleBtn {
+                    padding-bottom: 0.65rem;
+                }
+            }
+        }
+        @media screen and (min-width: 768px) {
+            position: relative;
+        }
+    }
+    // 外層框(不顯示功能選單，隱藏資訊)
+    &_content {
+        top: 0; left: 0; right: 0;
+        max-height: 245px;
+        overflow: hidden;
+        overflow-y: auto;
+        @media screen and (min-height: 425px) {
+            max-height: 100%;
+        }
+    }
+
+    // 選項樣式
+    &_item {
+        @extend %item;
+        margin: 0.5rem auto 0 auto;
+        z-index: 1;
+        // 有子選單時，控制展開與闔上的右側icon顯示方式
+        a {
+            display: inline-block;
+            width: 95%;
+            color: #ffffff;
+            text-decoration: none;
+            min-height: 1.5em;
+            max-height: 1.5em;
+        }
+        &.padding { padding: 0.25rem; }
+        // 隱藏
+        &.disabled { @extend %disabled; }
+        &.sub {
+            &:after {
+                position: absolute;
+                padding-right: 0.5rem;
+                right: 0;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                content: "\f105";
+            }
+            &.open {
+                background: rgba(255, 255, 255, 0.2);
+                &:after {
+                    position: absolute;
+                    padding-right: 0.5rem;
+                    right: 0;
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                    content: "\f107";
+                }
+                & + dd {
+                    background: rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+        // 子節點
+        &_subItemGroup {
+            @extend %item;
+            margin: 0; z-index: 1;
+            // 隱藏
+            &.disabled {  @extend %disabled; }
+            a { text-decoration: none; color: #fff; max-height: 1.5em; }
+        }
+        &_subItem { padding: 0.25rem; }
+    }
+
+
+    // 下方內容(logo+展開按鈕)
+    .bottom_group {
+        position: absolute;
+        bottom: 0.5rem;
+        width: 100%;
+        vertical-align: bottom !important;
+    }
+    // 展開按鈕
+    &_toggleBtn {cursor: pointer;}
+    // 下方logo
+    &_logo-bottom {
+        display: inline-block;
+        position: relative;
+        width: 60%;
+        //  判斷裝置高度
+        @media screen and (min-height: 740px) {
+            margin: auto;
+            bottom: 0.5rem;
+        }
+    }
+
+    // 僅圖示選單
+    .mainNavIcon {
+        //收合後樣式
+        padding: 0;
+        text-align: center;
+        max-height: 300px;
+        overflow: hidden;
+        overflow-y: auto;
+        a {
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        &_logo-item {
+            padding: 16px 0 6.6px 0;
+            cursor: pointer;
+            min-height: 1.875em;
+            display: block;
+            a {
+                height: 1.875em;
+                max-height: 1.875em;
+            }
+        }
+
+        &_item {
+            //選單
+            cursor: pointer;
+            &:hover,
+            &.active,
+            &.open {
+                background: rgba(24, 110, 169, 1);
+            }
+            &.disabled {
+                @extend %disabled;
+            }
+            .prompt {
+                margin-left: -1.5rem;
+                margin-bottom: 0;
+            }
+            a {
+                width: 100%;
+                padding: 0.25rem 0;
+            }
+        }
+        .bottom_group {
+            // 展開按鈕
+            left: 0;
+            width: 100%;
+        }
+        @media screen and (min-height: 440px) {
+            max-height: 435px;
+        }
+    }
+    @media print { display: none !important; }
+}
+
+.mainNav_logo-top-sml,
+.mainNav_logo-text-top-sml {
+    width: 40px;
+}
+
+// logo圖片版
+.mainNav_logo-top-big {
+    display: block;
+    max-height:75px;
+    max-width: 200px;
+    margin-left: 0.5rem;
+    overflow: hidden;
+    img {
+        object-fit: contain
+    }
+}
+// logo文字版
+.mainNav_logo-text-top-big {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    background-color: transparent;
+    text-align: center;
+    font-size: xx-large;
+    justify-content: center;
+    width: 100%;
+}
+
+.logo_bg {
+    background: url("../../image/sidebar_background-s.jpg");
+}

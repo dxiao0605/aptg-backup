@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy for HTML5 for Windows version 5.6.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>亞太電信-能源平台</title>
+<link rel="stylesheet" href="css/pub/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="css/pub/bootstrap.min.css" />
+<!-- <link rel="stylesheet" href="font-awesome.min.css" /> -->
+
+<link rel="stylesheet" href="css/pub/all.css" />
+<link href="css/pub/bootstrap-slider.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/pub/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="css/pub/pretty-checkbox.min.css" />
+
+
+<link rel="stylesheet" href="css/def/report.css" />
+<link rel="stylesheet" href="css/def/common.css" />
+
+<script src="js/pub/jquery.min.js"></script>
+<script src="js/pub/bootstrap.min.js"></script>
+<script src="js/pub/bootstrap-slider.js"></script>
+<script src="js/pub/jquery.dataTables.min.js"></script>
+
+<script src="js/pub/bootstrap-datepicker.min.js"></script>
+<script src="js/pub/bootstrap-datepicker.zh-TW.min.js"></script>
+<script src="js/pub/jsonpath-0.8.0.js"></script>
+<script src="js/pub/canvasjs.min.js"></script>
+
+<script src="js/def/common.js"></script>
+<script src="js/def/report.js"></script>
+
+</head>
+<body>
+
+	<div class="container-fluid">
+
+
+		<div id="header"></div>
+
+
+		<div class="row">
+
+			<div class="col-2">
+				<div id="side-bar" class="mt-4"></div>
+			</div>
+
+			<div class="col-10 mt-3">
+
+
+
+				<ul class="nav nav-tabs row" role="tablist">
+					<li class="nav-item ml-2"><a class="nav-link active" data-toggle="tab" href="#rp_now">即時用電</a></li>
+					<li class="nav-item ml-2"><a class="nav-link" data-toggle="tab" href="#rp_daily">日報表</a></li>
+					<li class="nav-item ml-2"><a class="nav-link" data-toggle="tab" href="#rp_monthly">月報表</a></li>
+
+				</ul>
+
+				<div class="tab-content row">
+
+					<div class="tab-pane active col-sm-12" id="rp_now">
+						<div class="row mt-3 ml-3">
+							<select class="custom-select col-sm-3 font-weight-bold mt-3" id="rp_sel_device" onchange="onShowSelect(this.id)"></select> <select class="custom-select col-sm-3 font-weight-bold ml-2 mt-3" id="rp_sel_type" onchange="onShowSelect(this.id)"></select>
+						</div>
+
+
+						<div id="chartNow" style="height: 370px; width: 100%;"></div>
+					</div>
+
+
+					<div class="tab-pane fade col-sm-12" id="rp_daily">
+						<div class="row mt-3 ml-3">
+
+							<div class="form-group mt-3">
+								<div class="input-group date">
+									<input type="text" class="form-control dp_input" placeholder="請輸入日期" id="dailyDay" onchange="onDailySelect()">
+									<div class="input-group-prepend">
+										<button class="btn btn-primary" type="button">
+											<i class='fas fa-calendar-alt'></i>
+										</button>
+									</div>
+
+								</div>
+
+
+							</div>
+
+							<select class="custom-select col-sm-3 font-weight-bold mt-3 ml-3" id="rp_daily_device" onchange="onDailySelect()"></select>
+
+                            <button type="button" class="btn btn-info btn-sm m-3"  onclick="exportCSV()">資料匯出</button>
+						</div>
+
+
+						<div id="dailychart" style="height: 370px; width: 100%;"></div>
+					</div>
+
+
+					<div class="tab-pane fade col-sm-12" id="rp_monthly">
+
+						<div class="row mt-3 ml-3">
+
+							<div class="form-group mt-3">
+								<div class="input-group date">
+									<input type="text" class="form-control dp_input" placeholder="請輸入日期" id="MonthlyDay" onchange="onMonthlySelect()">
+									<div class="input-group-prepend">
+										<button class="btn btn-primary" type="button">
+											<i class='fas fa-calendar-alt'></i>
+										</button>
+									</div>
+
+								</div>
+
+
+							</div>
+
+							<select class="custom-select col-sm-3 font-weight-bold mt-3 ml-3" id="rp_monthly_device" onchange="onMonthlySelect()"></select>
+                             <button type="button" class="btn btn-info btn-sm m-3"  onclick="exportCSV()">資料匯出</button>
+						</div>
+
+						<div id="monthlychart" style="height: 370px; width: 100%;"></div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		
+		<div id="footer"></div>
+		
+	</div>
+</body>
+</html>

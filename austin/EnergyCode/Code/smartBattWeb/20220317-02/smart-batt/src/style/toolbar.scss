@@ -1,0 +1,25 @@
+@charset 'utf-8';
+
+.toolbar {
+    display: inline-block;
+    position: relative;
+    &_item{
+        display: inline-block;
+        padding: 0 0.5rem;
+        vertical-align: middle;
+        // font-size: 1.2rem;
+        font-size: 1.1rem;        
+        cursor: pointer;
+        img {
+            // vertical-align: middle;
+            vertical-align: bottom;
+            // width: 25px;
+            // height: 25px;
+            width: 23px;            
+            padding: 2px 0;
+        }
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
